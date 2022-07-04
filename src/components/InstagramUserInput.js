@@ -1,25 +1,31 @@
 import styled from 'styled-components';
 import { useState } from "react";
+import axios from "axios";
 
 const Form = styled.form``;
-
 const Label = styled.label``;
-
 const Input = styled.input`
   font-size: 12px;
 `;
-
 const Button = styled.button``;
 
-function InstagramUserInput() {
+function InstagramUserInput({ setInstagramUser }) {
   const [username, setUsername] = useState();
   const onInputChange = (e) => {
     setUsername(e.target.value);
   };
 
-  const onFormSubmit = (e) => {
+  const onFormSubmit = async (e) => {
     e.preventDefault();
     console.log(username);
+    try {
+      const instagramUser = await axios.get(`http://localhost:8000/users/${username}`);
+      
+      console.log("instagramUser", instagramUser);
+      setInstagramUser(instagramUser);
+    } catch (err) {
+      console.error("err: ", err);
+    }
   };
 
   return (
