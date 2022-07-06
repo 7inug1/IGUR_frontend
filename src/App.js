@@ -4,12 +4,21 @@ import Report from './components/Report';
 import {
   Routes,
   Route,
-  Link
+  Link,
+  useNavigate,
 } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [instagramUser, setInstagramUser] = useState({});
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    if (Object.keys(instagramUser).length) {
+      navigate('/report');
+    }
+  }, [instagramUser, navigate]);
 
   return (
     <div className="App">
