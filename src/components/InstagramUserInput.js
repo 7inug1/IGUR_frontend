@@ -17,11 +17,10 @@ function InstagramUserInput({ setInstagramUser }) {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    console.log(username);
+
     try {
       const instagramUser = await axios.get(`http://localhost:8000/users/${username}`);
       
-      console.log("instagramUser", instagramUser);
       setInstagramUser(instagramUser);
     } catch (err) {
       console.error("err: ", err);
