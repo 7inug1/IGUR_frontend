@@ -17,7 +17,7 @@ function MostCommentedPosts({ posts }) {
         
         array.push(
           <Post
-            key={i}
+            key={post.id}
             location={post.location}
             imgSrc={post.imgSrc}
             description={post.description}
@@ -35,9 +35,12 @@ function MostCommentedPosts({ posts }) {
   }
 
   useEffect(() => {
-    const sortedContents = posts?.sort((a, b) => b.numberOfReplies - a.numberOfReplies);
+    if (posts?.length) {
+      let sortedContents = posts.slice(0);
+      sortedContents?.sort((a, b) => b.numberOfReplies - a.numberOfReplies);
 
-    setSortedPosts(sortedContents);
+      setSortedPosts(sortedContents);
+    }
   }, [posts]);
 
   return (

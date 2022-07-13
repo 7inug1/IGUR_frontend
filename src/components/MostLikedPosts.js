@@ -1,8 +1,9 @@
 import Post from "./Post";
 import { useState, useEffect } from "react";
+import useDeepCompareEffect from 'use-deep-compare-effect';
 
 function MostLikedPosts({ posts }) {
-  const [sortedPosts, setSortedPosts] = useState(null);
+  const [sortedPosts, setSortedPosts] = useState({});
   const NUMBER_OF_POSTS_TO_SHOW = 5;
   const convertSItoNumber = (likes) => {
     let numberOfLikes = likes;
@@ -17,6 +18,7 @@ function MostLikedPosts({ posts }) {
 
     return numberOfLikes;
   };
+  // const array = [];
   const printSortedContents = (sortedPosts) => {
     const array = [];
 
@@ -45,33 +47,36 @@ function MostLikedPosts({ posts }) {
 
   useEffect(() => {
     console.log("posts", posts);
-    
-
-    const sortedContents = posts?.sort((a, b) => {
-      const formerNumberOfLikes = convertSItoNumber(a.numberOfLikes);
-      const latterNumberOfLikes = convertSItoNumber(b.numberOfLikes);
-
-      // console.log("formerNumberOfLikes", formerNumberOfLikes);
-      // console.log("latterNumberOfLikes", latterNumberOfLikes);
+    if (posts?.length) {
+      console.log("useeffect");
       
-      
-      // return formerNumberOfLikes - latterNumberOfLikes;
-      return latterNumberOfLikes - formerNumberOfLikes;
-    });
+      let sortedContents = posts.slice();
 
-    console.log("sortedContents", sortedContents);
+      sortedContents?.sort((a, b) => {
+        const formerNumberOfLikes = convertSItoNumber(a.numberOfLikes);
+        const latterNumberOfLikes = convertSItoNumber(b.numberOfLikes);
+
+        return latterNumberOfLikes - formerNumberOfLikes;
+      });
+
+      console.log("sortedContents", sortedContents);
     
-    // printSortedContents(sortedContents);
-    setSortedPosts(sortedContents);
+      // printSortedContents(sortedContents);
+      setSortedPosts(sortedContents);
+    }
   }, [posts]);
+
+  useDeepCompareEffect(() => {
+    if (sortedPosts?.length) {
+      printSortedContents(sortedPosts);
+    }
+  }, [sortedPosts]);
 
   return (
     <>
       <h1>Most Liked</h1>
       <ul>
-        {
-          printSortedContents(sortedPosts)
-        }
+        { printSortedContents(sortedPosts) }
       </ul>
     </>
   );
