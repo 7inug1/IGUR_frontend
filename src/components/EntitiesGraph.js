@@ -1,27 +1,31 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 
-function EntitiesGraph({ contents }) {
+function EntitiesGraph({ posts }) {
   const getEntitiesCounter = () => {
     let entitiesCounter = {};
 
-    contents.posts.forEach((post) => {
-      const entities = post.entitiesResult?.entities;
+    if (posts?.length) {
+      posts.forEach((post) => {
+        const entities = post.entitiesResult?.entities;
+        
+        entities.forEach((entity) => {
+          console.log("entity", entity);
 
-      entities.forEach((entity) => {
-        if (entity.metadata["wikipedia_url"]) {
-          const coreEntity = entity;
-          const pair = { count: 1 };
-
-          if (entitiesCounter[coreEntity.name]) {
-            entitiesCounter[coreEntity.name].count++;
-          } else {
-            Object.assign(pair, { wikipedia_url: coreEntity.metadata["wikipedia_url"] });
-            entitiesCounter[coreEntity.name] = pair;
-          };
-        }
-      })
-    });
+          if (entity.metadata && entity.metadata["wikipedia_url"]) {
+            const coreEntity = entity;
+            const entityInfoObj = { count: 1 };
+  
+            if (entitiesCounter[coreEntity.name]) {
+              entitiesCounter[coreEntity.name].count++;
+            } else {
+              Object.assign(entityInfoObj, { wikipedia_url: coreEntity.metadata["wikipedia_url"] });
+              entitiesCounter[coreEntity.name] = entityInfoObj;
+            };
+          }
+        });
+      });
+    }
 
     return entitiesCounter;
   }
