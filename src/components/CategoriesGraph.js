@@ -1,48 +1,29 @@
 import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 
-function CategoriesGraph({ contents }) {
-  const categoriesCounter = getCategoriesCounter();
-  const svgRef = useRef();
-  const printCategories = () => {
-    const array = [];
-    const frequencyCounter = {};
-
-    contents.posts.forEach((post) => {
-      const categories = post.categoriesResult?.categories;
-
-      if (categories?.length) {
-        const mostRelevantCategory = categories[0];
-
-        frequencyCounter[mostRelevantCategory.name] ? frequencyCounter[mostRelevantCategory.name]++ : frequencyCounter[mostRelevantCategory.name] = 1;
-      }
-    });
-
-    let index = 0;
-
-    for (const [key, value] of Object.entries(frequencyCounter)) {
-      array.push(<div key={index}><span>{key}</span><span>{value}</span></div>);
-      index++;
-    }
-
-    return array;
-  }
-
+function CategoriesGraph({ posts }) {
   const getCategoriesCounter = () => {
     let categoriesCounter = {};
 
-    contents.posts.forEach((post) => {
-      const categories = post.categoriesResult?.categories;
+    if (posts?.length) {
+      posts?.forEach((post) => {
+        const categories = post.categoriesResult?.categories;
 
-      if (categories?.length) {
-        const mostRelevantCategory = categories[0];
+        if (categories?.length) {
+          const mostRelevantCategory = categories[0];
 
-        categoriesCounter[mostRelevantCategory.name] ? categoriesCounter[mostRelevantCategory.name]++ : categoriesCounter[mostRelevantCategory.name] = 1;
-      }
-    });
+          categoriesCounter[mostRelevantCategory.name] ? categoriesCounter[mostRelevantCategory.name]++ : categoriesCounter[mostRelevantCategory.name] = 1;
+        } else {
+          categoriesCounter["undefined"] ? categoriesCounter["undefined"]++ : categoriesCounter["undefined"] = 1;
+        }
+      });
+    }
 
     return categoriesCounter;
   }
+
+  const categoriesCounter = getCategoriesCounter();
+  const svgRef = useRef();
 
   useEffect(() => {
     const WIDTH = 600;
