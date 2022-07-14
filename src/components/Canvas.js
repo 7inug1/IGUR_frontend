@@ -34,7 +34,7 @@ function Canvas({ src, prediction, setIsClicked }) {
           ctx.rect(...prediction[i].bbox);
           ctx.stroke();
           ctx.fillText(
-            prediction[i].score.toFixed(3) + ' ' + prediction[i].class, prediction[i].bbox[0],
+            (prediction[i].score.toFixed(2)) * 100 + '% ' + prediction[i].class, prediction[i].bbox[0],
             prediction[i].bbox[1] > 10 ? prediction[i].bbox[1] - 5 : 10);
         }
       }
