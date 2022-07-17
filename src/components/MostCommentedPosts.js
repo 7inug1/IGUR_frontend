@@ -2,12 +2,17 @@ import styled from 'styled-components';
 import Post from "./Post";
 import { useState, useEffect } from "react";
 
+const UL = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+`;
 
 function MostCommentedPosts({ posts }) {
   const [sortedPosts, setSortedPosts] = useState(null);
 
   // const sortedContents = sortedPosts.posts.sort((a, b) => b.numberOfReplies - a.numberOfReplies);
-  const NUMBER_OF_POSTS_TO_SHOW = 5;
+  const NUMBER_OF_POSTS_TO_SHOW = 6;
   const printSortedContents = () => {
     const array = [];
 
@@ -24,6 +29,7 @@ function MostCommentedPosts({ posts }) {
             numberOfLikes={post.numberOfLikes}
             numberOfReplies={post.numberOfReplies}
             datePosted={post.datePosted}
+            prediction={post.prediction}
           />
         );
       }
@@ -46,11 +52,11 @@ function MostCommentedPosts({ posts }) {
   return (
     <>
       <h1>Most Commented</h1>
-      <ul>
+      <UL>
         {
           printSortedContents()
         }
-      </ul>
+      </UL>
     </>
   );
 }

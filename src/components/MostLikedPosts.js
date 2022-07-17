@@ -1,13 +1,20 @@
 import Post from "./Post";
 import { useState, useEffect } from "react";
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import styled from "styled-components";
+
+const UL = styled.ul`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+`;
 
 function MostLikedPosts({ posts }) {
   const [sortedPosts, setSortedPosts] = useState({});
-  const NUMBER_OF_POSTS_TO_SHOW = 5;
+  const NUMBER_OF_POSTS_TO_SHOW = 6;
   const convertSItoNumber = (likes) => {
     let numberOfLikes = likes;
-    
+
     if (numberOfLikes[numberOfLikes.length - 1] === "k") {
       numberOfLikes = Number(numberOfLikes.slice(0, numberOfLikes.length - 1)) * 1000;
     } else if (numberOfLikes[numberOfLikes.length - 1] === "m") {
@@ -18,14 +25,14 @@ function MostLikedPosts({ posts }) {
 
     return numberOfLikes;
   };
-  // const array = [];
+
   const printSortedContents = (sortedPosts) => {
     const array = [];
 
     if (sortedPosts?.length) {
       for (let i = 0; i < NUMBER_OF_POSTS_TO_SHOW; i++) {
         const post = sortedPosts[i];
-  
+
         array.push(
           <Post
             key={post.id}
@@ -35,6 +42,7 @@ function MostLikedPosts({ posts }) {
             numberOfLikes={post.numberOfLikes}
             numberOfReplies={post.numberOfReplies}
             datePosted={post.datePosted}
+            prediction={post.prediction}
           />
         );
       }
@@ -46,10 +54,7 @@ function MostLikedPosts({ posts }) {
   };
 
   useEffect(() => {
-    console.log("posts", posts);
-    if (posts?.length) {
-      console.log("useeffect");
-      
+    if (posts?.length && !Object.keys(sortedPosts).length) {
       let sortedContents = posts.slice();
 
       sortedContents?.sort((a, b) => {
@@ -59,12 +64,9 @@ function MostLikedPosts({ posts }) {
         return latterNumberOfLikes - formerNumberOfLikes;
       });
 
-      console.log("sortedContents", sortedContents);
-    
-      // printSortedContents(sortedContents);
       setSortedPosts(sortedContents);
     }
-  }, [posts]);
+  }, [posts, sortedPosts]);
 
   useDeepCompareEffect(() => {
     if (sortedPosts?.length) {
@@ -75,9 +77,9 @@ function MostLikedPosts({ posts }) {
   return (
     <>
       <h1>Most Liked</h1>
-      <ul>
+      <UL>
         { printSortedContents(sortedPosts) }
-      </ul>
+      </UL>
     </>
   );
 }
