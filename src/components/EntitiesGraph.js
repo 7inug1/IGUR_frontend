@@ -4,6 +4,7 @@ import useDeepCompareEffect from 'use-deep-compare-effect';
 
 function EntitiesGraph({ posts }) {
   const [entitiesCounter, setEntitiesCounter] = useState({});
+  const svgRef = useRef();
 
   useEffect(() => {
     const getEntitiesCounter = () => {
@@ -13,7 +14,7 @@ function EntitiesGraph({ posts }) {
         posts.forEach((post) => {
           const entities = post.entitiesResult?.entities;
 
-          entities.forEach((entity) => {
+          entities?.forEach((entity) => {
             if (entity.metadata && entity.metadata["wikipedia_url"]) {
               const coreEntity = entity;
               const entityInfoObj = { count: 1 };
@@ -33,10 +34,9 @@ function EntitiesGraph({ posts }) {
     }
 
     const entitiesCounter = getEntitiesCounter();
+
     setEntitiesCounter(entitiesCounter);
   }, [posts]);
-
-  const svgRef = useRef();
 
   useDeepCompareEffect(() => {
     if (Object.keys(entitiesCounter).length) {
@@ -89,7 +89,7 @@ function EntitiesGraph({ posts }) {
   return (
     <div id='chartArea'>
       {
-        Object.keys(entitiesCounter).length && <svg ref={svgRef} />
+        Object.keys(entitiesCounter).length ? <svg ref={svgRef} /> : ""
       }
     </div>
   );

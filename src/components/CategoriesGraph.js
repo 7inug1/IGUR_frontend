@@ -85,7 +85,7 @@ function CategoriesGraph({ posts }) {
     <>
       <div id='chartArea'>
         {
-          Object.keys(categoriesCounter).length && <svg ref={svgRef} />
+          Object.keys(categoriesCounter).length ? <svg ref={svgRef} /> : ""
         }
       </div>
     </>
