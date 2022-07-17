@@ -1,11 +1,11 @@
 import InstagramUserInput from './InstagramUserInput';
 import Leaderboard from './Leaderboard';
 
-function Home({ setResponse, setLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername }) {
+function Home({ setResponse, setIsLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername, setIsPrivateAccount }) {
   return (
     <>
-      <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setResponse={setResponse} setLoading={setLoading} username={username} setUsername={setUsername} />
-      <Leaderboard />
+      <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setResponse={setResponse} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setIsPrivateAccount={setIsPrivateAccount} />
+      <Leaderboard setIsLoading={setIsLoading} />
     </>
   )
 }
