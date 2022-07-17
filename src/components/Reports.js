@@ -28,7 +28,7 @@ function Reports({ numberOfCrawls, username, setResponse }) {
         const response = await axios({
           method: "get",
           // url: `http://localhost:8000/users/${username}/reports`,
-          url: `http://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports`,
+          url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports`,
         });
 
         setDBuser(response.data);
@@ -49,7 +49,7 @@ function Reports({ numberOfCrawls, username, setResponse }) {
         },
         method: "post",
         // url: `http://localhost:8000/users/${username}/reports/${reportId}`,
-        url: `http://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
+        url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
         data: { numberOfCrawls },
       });
       console.log("responseee", response);
