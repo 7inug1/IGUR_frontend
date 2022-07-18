@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+axios.defaults.withCredentials = true;
 
 const Username = styled.h2``;
 const Image = styled.img``;
@@ -50,7 +51,6 @@ function Reports({ numberOfCrawls, username, setResponse }) {
         // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
         url: `https://igur.link/users/${username}/reports/${reportId}`,
         data: { numberOfCrawls },
-        withCredentials: true,
       });
       console.log("responseee", response);
       

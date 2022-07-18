@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+axios.defaults.withCredentials = true;
 
 const Form = styled.form`
   padding: 16px 30px;
@@ -37,7 +38,6 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
         // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}`,
         url: `https://igur.link/users/${username}`,
         data: { numberOfCrawls, reportId },
-        withCredentials: true,
       });
 
       if (response.status === 204) {
