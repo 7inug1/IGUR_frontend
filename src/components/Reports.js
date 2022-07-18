@@ -45,9 +45,6 @@ function Reports({ numberOfCrawls, username, setResponse }) {
     const reportId = Date.now().toString();
     try {
       const response = await axios({
-        headers: {
-          'Content-Type': 'application/json'
-        },
         method: "post",
         // url: `http://localhost:8000/users/${username}/reports/${reportId}`,
         // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,

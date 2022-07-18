@@ -32,9 +32,6 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
 
     try {
       const response = await axios({
-        headers: {
-          'Content-Type': 'application/json'
-        },
         method: "post",
         // url: `http://localhost:8000/users/${username}`,
         // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}`,

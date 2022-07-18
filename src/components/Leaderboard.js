@@ -33,9 +33,6 @@ function Leaderboard({ setIsLoading }) {
     async function fetchAllUsers() {
       try {
           const response = await axios({
-          headers: {
-            'Content-Type': 'application/json'
-          },
           method: "get",
           // url: `http://localhost:8000/users`,
           // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users`,
