@@ -50,6 +50,7 @@ function Reports({ numberOfCrawls, username, setResponse }) {
         // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
         url: `https://igur.link/users/${username}/reports/${reportId}`,
         data: { numberOfCrawls },
+        withCredentials: true,
       });
       console.log("responseee", response);
       
