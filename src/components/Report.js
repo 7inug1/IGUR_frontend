@@ -29,7 +29,7 @@ function Report({ setIsLoading, isLoading, response }) {
       try {
         const response = await axios({
           method: "get",
-          url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
+          url: `https://igur.link/users/${username}/reports/${reportId}`,
         });
 
         setDBuser(response.data);

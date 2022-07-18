@@ -38,7 +38,8 @@ function Leaderboard({ setIsLoading }) {
           },
           method: "get",
           // url: `http://localhost:8000/users`,
-          url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users`,
+          // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users`,
+          url: `https://igur.link/users`,
         });
 
         setResponse(response);

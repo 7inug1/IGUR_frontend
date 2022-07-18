@@ -37,7 +37,8 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
         },
         method: "post",
         // url: `http://localhost:8000/users/${username}`,
-        url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}`,
+        // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}`,
+        url: `https://igur.link/users/${username}`,
         data: { numberOfCrawls, reportId },
       });
 
