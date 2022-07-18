@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRef, useState, useEffect } from "react";
 import * as d3 from "d3";
 

@@ -1,10 +1,10 @@
 import styled from 'styled-components';
-import Post from "./Post";
-import LocationsGraph from "./LocationsGraph";
+// import Post from "./Post";
+// import LocationsGraph from "./LocationsGraph";
 import MostLikedPosts from './MostLikedPosts';
 import MostCommentedPosts from './MostCommentedPosts';
 import CategoriesGraph from "./CategoriesGraph";
-import SentimentsGraph from "./SentimentsGraph";
+// import SentimentsGraph from "./SentimentsGraph";
 import EntitiesGraph from "./EntitiesGraph";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";

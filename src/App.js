@@ -1,7 +1,6 @@
 import './App.css';
 import { useState } from "react";
-import { Routes, Route, useNavigate, Link } from "react-router-dom";
-import useDeepCompareEffect from 'use-deep-compare-effect';
+import { Routes, Route, Link } from "react-router-dom";
 import styled from 'styled-components';
 import Home from './components/Home';
 import Reports from './components/Reports';
