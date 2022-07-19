@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-axios.defaults.withCredentials = true;
 
 const Username = styled.h2``;
 const Image = styled.img``;

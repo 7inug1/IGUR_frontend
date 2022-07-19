@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-axios.defaults.withCredentials = true;
 
 const Form = styled.form`
   padding: 16px 30px;
