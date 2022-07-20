@@ -68,17 +68,17 @@ function SentimentsGraph({ posts }) {
         .ticks(5);
       svg.append('g')
         .call(xAxis)
-        .attr('transform', `translate(0, ${HEIGHT})`);
+        .attr('transform', `translate(0, ${HEIGHT/2})`);
       svg.append('g')
         .call(yAxis);
       
       svg.selectAll('.line')
-        .data([sentiments])
+        .data(data)
         .join('path')
-        // .attr('d', d3.line()
-        //   .x(function(data, index) { return xScale(index) })
-        //   .y(function(data) { return yScale(data.id) })
-        //   )
+        .attr('d', d3.line()
+          .x(function(data, index) { return xScale(index) })
+          .y(function(data) { return yScale(data.id) })
+          )
         .attr('d', sentiments => generateScaledLine(sentiments))
         .attr('fill', 'none')
         .attr('stroke', 'black');

@@ -14,6 +14,7 @@ const Report = styled.li`
 const DateCreated = styled.div``;
 const NumberOfCrawls = styled.div``;
 const ProceedButton = styled.button``;
+const Notification = styled.p``;
 
 function Reports({ numberOfCrawls, username, setResponse }) {
   const navigate = useNavigate();
@@ -23,16 +24,15 @@ function Reports({ numberOfCrawls, username, setResponse }) {
   useEffect(() => {
     async function fetchReports() {
       const username = params.username;
+      const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports` : `https://igur.link/users/${username}/reports`;
 
       try {
         const response = await axios({
           method: "get",
-          // url: `http://localhost:8000/users/${username}/reports`,
-          // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports`,
-          url: `https://igur.link/users/${username}/reports`,
+          url,
         });
 
-        setDBuser(response.data);
+        if(response.status === 200) setDBuser(response.data);
       } catch (err) {
         console.log("err in report: ", err);
       }
@@ -43,17 +43,17 @@ function Reports({ numberOfCrawls, username, setResponse }) {
 
   const onButtonClick = async () => {
     const reportId = Date.now().toString();
+    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+
     try {
       const response = await axios({
         method: "post",
-        // url: `http://localhost:8000/users/${username}/reports/${reportId}`,
-        // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}/reports/${reportId}`,
-        url: `https://igur.link/users/${username}/reports/${reportId}`,
+        url,
         data: { numberOfCrawls },
       });
       console.log("responseee", response);
       
-      if (response.status === 206) {
+      if (response.status === 201) {
         navigate(`/users/${username}/reports/${reportId}`);
       }
     } catch (err) {
@@ -64,20 +64,20 @@ function Reports({ numberOfCrawls, username, setResponse }) {
   return (
     <>
       {dbUser ? <>
-        <h2>Reports exist</h2>
+        <h2>Reports</h2>
         <Username>{dbUser.username}</Username>
         <Image src={dbUser.reports[dbUser.reports.length - 1].profile.profileImgSrc} alt={dbUser?.reports[dbUser.reports.length - 1].profile.profileImgAlt} />
         <ul>
-          {dbUser.reports.map((report, index) => {
+          {dbUser.reports.length ? dbUser.reports.map((report, index) => {
             return [
               <Report key={index}>
                 <Link to={`${report.id}`} className="link">
                   <DateCreated>{(new Date(Number(report.id))).toLocaleString()}</DateCreated>
-                  <NumberOfCrawls>{report.contents.posts.length}</NumberOfCrawls>
+                  <NumberOfCrawls>{report.contents?.posts.length}</NumberOfCrawls>
                 </Link>
               </Report>
             ]
-          })}
+          }) : <Notification className="notification">No reports yet</Notification>}
         </ul>
         {numberOfCrawls
           ?

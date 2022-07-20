@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const Container = styled.div`
   display: flex;
@@ -7,21 +9,28 @@ const Container = styled.div`
   min-height: calc(100vh - 142px);
 `;
 const Wrapper = styled.div``;
-const Message = styled.p``;
-const Button = styled.button`
-  margin-top: 25px;
-`;
+const Message = styled.p`margin-bottom: 50px`;
 
-function NotificationPage({ notification, isPrivateAccount, setIsPrivateAccount }) {
+function NotificationPage({ notificationCode, setNotificationCode }) {
   const onButtonClick = () => {
-    setIsPrivateAccount(false);
+    setNotificationCode(false);
   }
-  
+  const [notificationMessage, setNotificationMessage] = useState(null);
+  useEffect(() => {
+    if (notificationCode === "privateAccount") {
+      setNotificationMessage("It's a private account.");
+    }
+    if (notificationCode === "noAccount") {
+      setNotificationMessage("There's no such account.");
+    }
+    setNotificationCode(null);
+  }, [notificationCode, setNotificationCode]);
+
   return (
     <Container>
       <Wrapper>
-        <Message>{notification}</Message>
-        { isPrivateAccount && <Button onClick={onButtonClick} className="button01">Back to Home</Button> }
+        { (typeof notificationMessage==="string") && <Message>{notificationMessage}</Message>}
+        { <Link to={"/"} className="button01" onClick={onButtonClick}>Back to Home</Link> }
       </Wrapper>
     </Container>
   )

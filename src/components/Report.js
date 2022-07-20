@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import MostLikedPosts from './MostLikedPosts';
 import MostCommentedPosts from './MostCommentedPosts';
 import CategoriesGraph from "./CategoriesGraph";
-// import SentimentsGraph from "./SentimentsGraph";
+import SentimentsGraph from "./SentimentsGraph";
 import EntitiesGraph from "./EntitiesGraph";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -19,27 +19,29 @@ const Introduction = styled.p``;
 const NumberOfPosts = styled.div``;
 const NumberOfFollowers = styled.div``;
 const NumberOfFollowings = styled.div``;
+const Notification = styled.p``;
 
 function Report({ setIsLoading, isLoading, response }) {
   let { username, reportId } = useParams();
   const [dbUser, setDBuser] = useState(null); 
 
   useEffect(() => {
-    async function fetchReport() {
+    async function fetchUser() {
+      const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+
       try {
         const response = await axios({
           method: "get",
-          url: `https://igur.link/users/${username}/reports/${reportId}`,
+          url,
         });
 
-        setDBuser(response.data);
+        if (response.status === 200) setDBuser(response.data);
       } catch (err) {
         console.log("err in report: ", err);
       }
     }
-    if (!dbUser) {
-      fetchReport();
-    }
+
+    if (!dbUser) fetchUser();
   }, [dbUser, reportId, username]);
 
   return (
@@ -66,7 +68,7 @@ function Report({ setIsLoading, isLoading, response }) {
             {/* <LocationsGraph posts={dbUser?.reports[0].contents}/> */}
           </Contents>
         </div>
-        : "report doesn't exist"
+        : <Notification className='notification'>Report doesn't exist</Notification>
       }
     </>
   );
