@@ -26,7 +26,15 @@
   display: block;
 }
 
+.slider-container::after {
+  content: "";
+  display: block;
+  clear: both;
+}
 
+.notification {
+  margin-top: 16px;
+}
 
 @media only screen {
   html,
