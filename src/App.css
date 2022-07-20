@@ -1,7 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
-.logo {
+.logo, .reports-header {
   font-family: 'Lobster', cursive;
+  font-weight: lighter;
+}
+
+.logo {
+  font-size: 50px;
+  /* font-weight: lighter; */
+}
+
+.image-container img {
+  border-radius: 50%;
+}
+
+.reports-header {
+  font-size: 40px;
 }
 
 .slider-container div {

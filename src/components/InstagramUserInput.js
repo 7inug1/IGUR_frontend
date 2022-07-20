@@ -3,7 +3,6 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Form = styled.form`
-  padding: 16px 30px;
   background: #fff;
   min-width: 125px;
   width: 100%;
@@ -16,6 +15,10 @@ const Paragraph = styled.div`
   font-size: 30px;
   width: 100%;
   word-wrap: break-word;
+  background: #f4f8ff;;
+  border-radius: 8px;
+  padding: 30px;
+  box-sizing: border-box;
 `;
 const FirstLine = styled.span`
   display: inline-block;
@@ -52,10 +55,11 @@ const Input = styled.input`
   border-bottom: 1px solid black !important;
   text-align: center;
   font-size: 30px;
+  color: black;
 `;
-const Button = styled.button`margin-top: 10px`;
+const Button = styled.button`margin-top: 15px`;
 
-function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername, setIsPrivateAccount, setNotificationCode }) {
+function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
   const navigate = useNavigate();
   const onInputChange = (e) => {
     e.target.id === "username" && setUsername(e.target.value);
@@ -103,10 +107,10 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
   return (
     <Form onSubmit={onFormSubmit}>
       <Paragraph>
-        <FirstLine>Make me an Instagram report with ...</FirstLine>
+        <FirstLine>Create an Instagram report with ...</FirstLine>
         <Container>
           <InputContainer01 className="input01">
-            <Input type="text" placeholder='instagram username' id="username" onChange={onInputChange} required />
+            <Input type="text" placeholder='username' id="username" onChange={onInputChange} required />
           </InputContainer01>
           <EndingText01>'s</EndingText01>
         </Container>

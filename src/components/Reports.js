@@ -64,8 +64,8 @@ function Reports({ numberOfCrawls, username, setResponse }) {
   return (
     <>
       {dbUser ? <>
-        <h2>Reports</h2>
-        <Username>{dbUser.username}</Username>
+        <h2 className='reports-header'>Reports</h2>
+        <Username>@{dbUser.username}</Username>
         <Image src={dbUser.reports[dbUser.reports.length - 1].profile.profileImgSrc} alt={dbUser?.reports[dbUser.reports.length - 1].profile.profileImgAlt} />
         <ul>
           {dbUser.reports.length ? dbUser.reports.map((report, index) => {

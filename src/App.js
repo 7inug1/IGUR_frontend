@@ -9,7 +9,7 @@ import InstagramUserInput from './components/InstagramUserInput';
 import Leaderboard from './components/Leaderboard';
 
 const Wrapper = styled.div`
-  padding: 40px;
+  padding: 50px;
   text-align: center;
   min-height: calc(100vh - 62px);
   box-sizing: border-box;
@@ -22,11 +22,9 @@ const Header = styled.div`
   padding: 0px 20px;
   height: 60px;
   text-align: center;
+  padding-top: 35px;
 `;
-const Logo = styled.h1`
-  font-size: 45px;
-  font-weight: lighter;
-`;
+const Logo = styled.h1``;
 const Footer = styled.div``;
 
 function App() {
@@ -57,9 +55,8 @@ function App() {
       </Header>
       { (!isLoading && !isPrivateAccount) &&
         <Wrapper>
-          <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setResponse={setResponse} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />
           <Routes>
-            <Route path="/" element={<Leaderboard />} />
+            <Route path="/" element={<Leaderboard setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />} />
             <Route path="/users/:username/reports/:reportId" element={<Report response={response} setIsLoading={setIsLoading} isLoading={isLoading} />}></Route>
             <Route path="/users/:username/reports" element={<Reports response={response} setResponse={setResponse} numberOfCrawls={numberOfCrawls} username={username} />}></Route>
             <Route path="/errors" element={<NotificationPage notificationCode={notificationCode} setNotificationCode={setNotificationCode} />}></Route>
@@ -74,7 +71,6 @@ function App() {
           </Footer>
         </Wrapper>
       }
-      {/* {(typeof notificationCode === "string") && <NotificationPage notificationMessage={notificationCode} />} */}
     </>
   );
 }
