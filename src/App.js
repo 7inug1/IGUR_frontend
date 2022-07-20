@@ -1,11 +1,12 @@
 import './App.css';
-import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Routes, Route, Link, Navigate, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import Home from './components/Home';
 import Reports from './components/Reports';
 import Report from './components/Report';
 import NotificationPage from './components/NotificationPage';
+import InstagramUserInput from './components/InstagramUserInput';
+import Leaderboard from './components/Leaderboard';
 
 const Wrapper = styled.div`
   padding: 40px;
@@ -29,16 +30,26 @@ const Logo = styled.h1`
 const Footer = styled.div``;
 
 function App() {
+  const navigate = useNavigate();
   const [response, setResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState();
-  const [numberOfCrawls, setNumberOfCrawls] = useState(0);
+  const [numberOfCrawls, setNumberOfCrawls] = useState(10);
   const [isPrivateAccount, setIsPrivateAccount] = useState(false);
+  const [notificationCode, setNotificationCode] = useState(null);
+  const onButtonClick = () => {
+    if (notificationCode) setNotificationCode(false);
+  }
+  useEffect(() => {
+    if (notificationCode) {
+      navigate("/errors");
+    }
+  }, [navigate, notificationCode]);
 
   return (
     <>
       <Header>
-        <Link to={"/"}>
+        <Link to={"/"} onClick={onButtonClick}>
           <Logo className='logo'>
             IGUR
           </Logo>
@@ -46,10 +57,13 @@ function App() {
       </Header>
       { (!isLoading && !isPrivateAccount) &&
         <Wrapper>
+          <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setResponse={setResponse} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />
           <Routes>
-            <Route path="/" element={<Home setIsLoading={setIsLoading} setResponse={setResponse} numberOfCrawls={numberOfCrawls} setNumberOfCrawls={setNumberOfCrawls} username={username} setUsername={setUsername} setIsPrivateAccount={setIsPrivateAccount} />} />
+            <Route path="/" element={<Leaderboard />} />
             <Route path="/users/:username/reports/:reportId" element={<Report response={response} setIsLoading={setIsLoading} isLoading={isLoading} />}></Route>
             <Route path="/users/:username/reports" element={<Reports response={response} setResponse={setResponse} numberOfCrawls={numberOfCrawls} username={username} />}></Route>
+            <Route path="/errors" element={<NotificationPage notificationCode={notificationCode} setNotificationCode={setNotificationCode} />}></Route>
+            <Route path="/*" element={<Navigate to="/" replace />} />
           </Routes>
           <Footer>
             <ul>
@@ -60,18 +74,7 @@ function App() {
           </Footer>
         </Wrapper>
       }
-      {
-        isPrivateAccount &&
-        <Wrapper>
-          <NotificationPage notification={"It's a private Account."}  isPrivateAccount={isPrivateAccount} setIsPrivateAccount={setIsPrivateAccount} />
-        </Wrapper>
-      }
-      {
-        isLoading &&
-        <Wrapper>
-          <NotificationPage notification={"Loading"} />
-        </Wrapper>
-      }
+      {/* {(typeof notificationCode === "string") && <NotificationPage notificationMessage={notificationCode} />} */}
     </>
   );
 }
