@@ -9,7 +9,9 @@ const Form = styled.form`
   background: #fff;
 `;
 const Settings = styled.ul``;
-const List = styled.li``;
+const List = styled.li`
+  position: relative;
+`;
 const Slider = styled.input``;
 const InputContainer = styled.div``;
 const Input = styled.input`
@@ -17,7 +19,7 @@ const Input = styled.input`
 `;
 const Button = styled.button``;
 
-function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername, setIsPrivateAccount }) {
+function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername, setIsPrivateAccount, setNotificationCode }) {
   const navigate = useNavigate();
   const onInputChange = (e) => {
     e.target.id === "username" && setUsername(e.target.value);
@@ -30,12 +32,12 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
     e.preventDefault();
     setIsLoading(true);
 
+    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
+    
     try {
       const response = await axios({
         method: "post",
-        // url: `http://localhost:8000/users/${username}`,
-        // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users/${username}`,
-        url: `https://igur.link/users/${username}`,
+        url,
         data: { numberOfCrawls, reportId },
       });
 
@@ -49,10 +51,14 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
         navigate(`/users/${username}/reports`);
       }
 
-      if (response.status === 214) {
+      if (response.data.notificationCode) {
         setIsLoading(false);
-        console.log("Private account");
-        setIsPrivateAccount(true);
+        setNotificationCode(response.data.notificationCode);
+      }
+
+      if (response.data.notificationCode) {
+        setIsLoading(false);
+        setNotificationCode(response.data.notificationCode);
       }
     } catch (err) {
       console.error("err: ", err);
@@ -65,8 +71,8 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
         <Input type="text" placeholder='instagram username' id="username" onChange={onInputChange} required />
       </InputContainer>
       <Settings>
-        <List>
-          <Slider type="range" step="10" min="0" max="50" defaultValue={numberOfCrawls} id="slider" onChange={onInputChange} />
+        <List className="slider-container">
+          <Slider type="range" step="1" min="10" max="20" defaultValue={numberOfCrawls} id="slider" onChange={onInputChange} required />
         </List>
       </Settings>
       <Button type="submit" className="button01">Search</Button>
