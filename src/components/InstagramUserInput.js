@@ -33,6 +33,7 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
     setIsLoading(true);
 
     const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
+    console.log("url", url);
     
     try {
       const response = await axios({
