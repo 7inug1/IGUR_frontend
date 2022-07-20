@@ -4,6 +4,11 @@
   font-family: 'Lobster', cursive;
 }
 
+.slider-container div {
+  display: flex;
+  justify-content: space-between;
+}
+
 .button01 {
   background: #0095f6;
   color: #fff;
@@ -15,11 +20,13 @@
 }
 
 .input01 {
-  background: #efefef !important;
   height: 36px !important;
   min-width: 125px;
-  border-radius: 8px;
-  padding: 3px 16px;
+}
+
+.input01 input:disabled {
+  color: black;
+  border-bottom: none !important;
 }
 
 .link {

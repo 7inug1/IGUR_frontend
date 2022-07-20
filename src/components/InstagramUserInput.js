@@ -4,20 +4,56 @@ import { useNavigate } from "react-router-dom";
 
 const Form = styled.form`
   padding: 16px 30px;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
   background: #fff;
+  min-width: 125px;
+  width: 100%;
+  box-sizing: border-box;
+  display: inline-block;
 `;
-const Settings = styled.ul``;
-const List = styled.li`
+const Paragraph = styled.div`
+  text-align: center;
+  display: inline-block;
+  font-size: 30px;
+  width: 100%;
+  word-wrap: break-word;
+`;
+const FirstLine = styled.span`
+  display: inline-block;
+  margin-bottom: 10px;
+`;
+const Container = styled.div`
   position: relative;
 `;
-const Slider = styled.input``;
-const InputContainer = styled.div``;
-const Input = styled.input`
-  font-size: 12px;
+const EndingText01 = styled.span`
+  position: absolute;
+  bottom: 0;
+  right: 0;
 `;
-const Button = styled.button``;
+const EndingText02 = styled.span`
+  position: absolute;
+  bottom: 10px;
+  right: 0;
+`;
+const Settings = styled.div`
+  position: relative;
+`;
+const SliderContainer = styled.div`
+  padding-right: 85px;
+`;
+const Slider = styled.input``;
+const InputContainer01 = styled.div`
+  padding: 3px 25px 0px 16px;
+`;
+const InputContainer02 = styled.div`
+  position: relative;
+  top: 14px;
+`;
+const Input = styled.input`
+  border-bottom: 1px solid black !important;
+  text-align: center;
+  font-size: 30px;
+`;
+const Button = styled.button`margin-top: 10px`;
 
 function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumberOfCrawls, username, setUsername, setIsPrivateAccount, setNotificationCode }) {
   const navigate = useNavigate();
@@ -28,13 +64,11 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
 
   const onFormSubmit = async (e) => {
     const reportId = Date.now().toString();
+    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
 
     e.preventDefault();
     setIsLoading(true);
 
-    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
-    console.log("url", url);
-    
     try {
       const response = await axios({
         method: "post",
@@ -68,15 +102,25 @@ function InstagramUserInput({ setResponse, setIsLoading, numberOfCrawls, setNumb
 
   return (
     <Form onSubmit={onFormSubmit}>
-      <InputContainer className="input01">
-        <Input type="text" placeholder='instagram username' id="username" onChange={onInputChange} required />
-      </InputContainer>
-      <Settings>
-        <List className="slider-container">
-          <Slider type="range" step="1" min="10" max="20" defaultValue={numberOfCrawls} id="slider" onChange={onInputChange} required />
-        </List>
-      </Settings>
-      <Button type="submit" className="button01">Search</Button>
+      <Paragraph>
+        <FirstLine>Make me an Instagram report with ...</FirstLine>
+        <Container>
+          <InputContainer01 className="input01">
+            <Input type="text" placeholder='instagram username' id="username" onChange={onInputChange} required />
+          </InputContainer01>
+          <EndingText01>'s</EndingText01>
+        </Container>
+        <Settings>
+          <SliderContainer>
+          <InputContainer02 className="input01">
+            <Input type="text" value={numberOfCrawls} placeholder='instagram username' id="username" onChange={onInputChange} required disabled />
+          </InputContainer02>
+            <Slider type="range" step="1" min="10" max="20" defaultValue={numberOfCrawls} id="slider" onChange={onInputChange} required />
+          </SliderContainer>
+          <EndingText02>Posts.</EndingText02>
+        </Settings>
+      </Paragraph>
+      <Button type="submit" className="button01">Make Report!</Button>
     </Form>
   );
 }
