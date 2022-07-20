@@ -25,35 +25,37 @@ const Img = styled.img``;
 const NumberOfFollowers = styled.div`display: inline-block`;
 const NumberOfFollowings = styled.div`display: inline-block`;
 const Reports = styled.div`display: inline-block`;
+const Notification = styled.p``;
+const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
 
-function Leaderboard({ setIsLoading }) {
-  const [response, setResponse] = useState([]);
+function Leaderboard() {
+  const [dbUsers, setDBuser] = useState(null);
 
   useEffect(() => {
     async function fetchAllUsers() {
       try {
-          const response = await axios({
+        const response = await axios({
           method: "get",
-          // url: `http://localhost:8000/users`,
-          // url: `https://IGUR-backend-dev.ap-northeast-2.elasticbeanstalk.com/users`,
-          url: `https://igur.link/users`,
+          url,
         });
 
-        setResponse(response);
+        if (response.status === 200) {
+          setDBuser(response.data.dbUsers);
+        }
       } catch (err) {
-        console.log("err", err);
+        console.log("axios err: ", err);
       }
     }
 
     fetchAllUsers();
-  }, [setIsLoading]);
+  }, []);
 
   return (
     <>
       <Container>
         <H2>Leaderboard</H2>
         <LeaderboardLists>
-          {Object.keys(response).length ? response.data.dbUsers.map((user, index) => {
+          {dbUsers && (dbUsers.length ? dbUsers.map((user, index) => {
             return [
               <ListItem key={index}>
                 <Link to={`users/${user.username}/reports`} className="link">
@@ -66,7 +68,7 @@ function Leaderboard({ setIsLoading }) {
                 </Link>
               </ListItem>
             ]
-          }) : ""}
+          }) : <Notification className='notification'>No instagram reports yet 😭</Notification>)}
         </LeaderboardLists>
       </Container>
     </>
