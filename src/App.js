@@ -5,27 +5,29 @@ import styled from 'styled-components';
 import Reports from './components/Reports';
 import Report from './components/Report';
 import NotificationPage from './components/NotificationPage';
-import InstagramUserInput from './components/InstagramUserInput';
 import Leaderboard from './components/Leaderboard';
 
 const Wrapper = styled.div`
   padding: 50px;
   text-align: center;
-  min-height: calc(100vh - 62px);
+  min-height: calc(100vh - 200px);
   box-sizing: border-box;
 `;
 const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  justify-content:
   padding: 0px 20px;
-  height: 60px;
+  height: 100px;
   text-align: center;
-  padding-top: 35px;
 `;
 const Logo = styled.h1``;
-const Footer = styled.div``;
+const Footer = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+`;
 
 function App() {
   const navigate = useNavigate();
@@ -33,7 +35,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [username, setUsername] = useState();
   const [numberOfCrawls, setNumberOfCrawls] = useState(10);
-  const [isPrivateAccount, setIsPrivateAccount] = useState(false);
   const [notificationCode, setNotificationCode] = useState(null);
   const onButtonClick = () => {
     if (notificationCode) setNotificationCode(false);
@@ -53,7 +54,7 @@ function App() {
           </Logo>
         </Link>
       </Header>
-      { (!isLoading && !isPrivateAccount) &&
+      { (!isLoading) &&
         <Wrapper>
           <Routes>
             <Route path="/" element={<Leaderboard setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />} />
@@ -71,6 +72,7 @@ function App() {
           </Footer>
         </Wrapper>
       }
+      <div id="modal-portal"></div>
     </>
   );
 }

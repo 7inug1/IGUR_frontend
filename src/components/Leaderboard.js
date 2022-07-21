@@ -10,34 +10,61 @@ const Container = styled.div`
   background: #fff;
 `;
 const H2 = styled.h2``;
-const LeaderboardLists = styled.ul``;
-const ListItem = styled.li`
-  background: #fff;
-  ${'' /* border: 1px solid rgb(219, 219, 219); */}
-  ${'' /* border-radius: 8px; */}
-  margin-top: 16px;
-  ${'' /* background: #f4f8ff; */}
-  border-bottom: 1px solid black;
+const LeaderboardLists = styled.ul`
+  margin-top: 20px;
 `;
-const ListContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+const ListItem = styled.li`
+  &:first-child {
+    border-top: 1px solid black;
+  }
+  background: #fff;
+  border-bottom: 1px solid black;
   padding: 25px;
 `;
-const Username = styled.h2``;
-const Name = styled.h2``;
+const ListContainer = styled.div`
+  min-height: 150px;
+  display: grid;
+  grid-template-columns: 3fr 3fr 2fr;
+  gap: 30px;
+`;
+const Username = styled.h2`
+`;
+const Name = styled.h2`
+  margin-top: 20px;
+`;
 const Img = styled.img``;
-const NumberOfFollowers = styled.div`display: inline-block`;
-const NumberOfFollowings = styled.div`display: inline-block`;
-const Reports = styled.div`display: inline-block`;
+const NumberOfFollowers = styled.div`
+  margin-top: 20px;
+`;
+const NumberOfFollowings = styled.div``;
+const Label = styled.span`
+  margin-right: 10px;
+`;
+const Value = styled.span`
+  font-weight: bolder;
+`;
+const NumberOfReports = styled.div`
+  font-weight: bolder;
+`;
 const Notification = styled.p``;
 const ImageContainer = styled.div`
-  display: inline-block;
+  display: flex;
+  justify-content: left;
+  align-items: center;
 `;
 const InfoContainer = styled.div`
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: left;
 `;
-const ReportContainer = styled.div``;
+const Wrapper = styled.div`
+  text-align: left;
+`;
+const ReportContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: right;
+`;
 const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
 
 function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
@@ -66,7 +93,7 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
     <>
       <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />
       <Container>
-        <H2 className='reports-header'>Reports</H2>
+        <H2 className='report-header'>Reports</H2>
         <LeaderboardLists>
           {dbUsers && (dbUsers.length ? dbUsers.map((user, index) => {
             return [
@@ -77,13 +104,23 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
                       <Img src={user.reports[0].profile.profileImgSrc} />
                     </ImageContainer>
                     <InfoContainer>
-                      <Username>@{user.username}</Username>
-                      <Name>{user.reports[0].profile.name}</Name>
-                      <NumberOfFollowers>followers: {user.reports[0].profile.numberOfFollowers}</NumberOfFollowers>
-                      <NumberOfFollowings>followings: {user.reports[0].profile.numberOfFollowings}</NumberOfFollowings>
+                      <Wrapper>
+                        <Username className='username'>@{user.username}</Username>
+                        <Name className='name'>{user.reports[0].profile.name}</Name>
+                        <NumberOfFollowers>
+                          <Label>Followers</Label> 
+                          <Value>{user.reports[0].profile.numberOfFollowers}</Value>
+                        </NumberOfFollowers>
+                        <NumberOfFollowings>
+                          <Label>Followings</Label> 
+                          <Value>{user.reports[0].profile.numberOfFollowings}</Value>
+                        </NumberOfFollowings>
+                      </Wrapper>
                     </InfoContainer>
                     <ReportContainer>
-                      <Reports>{"📊".repeat(user.reports.length)}</Reports>
+                      <Wrapper>
+                        <NumberOfReports>{user.reports.length < 2 ? `${user.reports.length} report` : `${user.reports.length} reports`}</NumberOfReports>
+                      </Wrapper>
                     </ReportContainer>
                   </ListContainer>
                 </Link>

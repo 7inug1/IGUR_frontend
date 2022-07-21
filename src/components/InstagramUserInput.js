@@ -16,7 +16,6 @@ const Paragraph = styled.div`
   width: 100%;
   word-wrap: break-word;
   background: #f4f8ff;;
-  border-radius: 8px;
   padding: 30px;
   box-sizing: border-box;
 `;

@@ -3,12 +3,18 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 
-const Username = styled.h2``;
+const ReportsContainer = styled.div``;
+const Title = styled.h2`
+`;
+const Username = styled.h2`
+  margin-top: 15px;
+`;
+const ImageContainer = styled.div`
+`;
 const Image = styled.img``;
 const Report = styled.li`
   background: #fff;
-  border: 1px solid rgb(219, 219, 219);
-  border-radius: 8px;
+  border-bottom: 1px solid black;
   margin-top: 16px;
 `;
 const DateCreated = styled.div``;
@@ -63,33 +69,36 @@ function Reports({ numberOfCrawls, username, setResponse }) {
 
   return (
     <>
-      {dbUser ? <>
-        <h2 className='reports-header'>Reports</h2>
-        <Username>@{dbUser.username}</Username>
-        <Image src={dbUser.reports[dbUser.reports.length - 1].profile.profileImgSrc} alt={dbUser?.reports[dbUser.reports.length - 1].profile.profileImgAlt} />
-        <ul>
-          {dbUser.reports.length ? dbUser.reports.map((report, index) => {
-            return [
-              <Report key={index}>
-                <Link to={`${report.id}`} className="link">
-                  <DateCreated>{(new Date(Number(report.id))).toLocaleString()}</DateCreated>
-                  <NumberOfCrawls>{report.contents?.posts.length}</NumberOfCrawls>
-                </Link>
-              </Report>
-            ]
-          }) : <Notification className="notification">No reports yet</Notification>}
-        </ul>
-        {numberOfCrawls
-          ?
-          <>
-            {numberOfCrawls}
-            <ProceedButton onClick={onButtonClick}>
-              Proceed
-            </ProceedButton>
-          </>
-          :
+      {dbUser ?
+        <ReportsContainer>
+          <Title className='report-header report-title'>Reports</Title>
+          <ImageContainer className='image-container'>
+            <Image src={dbUser.reports[dbUser.reports.length - 1].profile.profileImgSrc} alt={dbUser?.reports[dbUser.reports.length - 1].profile.profileImgAlt} />
+          </ImageContainer>
+          <Username className='username'>@{dbUser.username}</Username>
+          <ul>
+            {dbUser.reports.length ? dbUser.reports.map((report, index) => {
+              return [
+                <Report key={index}>
+                  <Link to={`${report.id}`} className="link">
+                    <DateCreated>{(new Date(Number(report.id))).toLocaleString()}</DateCreated>
+                    <NumberOfCrawls>{report.contents?.posts.length}</NumberOfCrawls>
+                  </Link>
+                </Report>
+              ]
+            }) : <Notification className="notification">No reports yet</Notification>}
+          </ul>
+          {numberOfCrawls
+            ?
+            <>
+              {numberOfCrawls}
+              <ProceedButton onClick={onButtonClick}>
+                Proceed
+              </ProceedButton>
+            </>
+            :
           ""}
-      </> : <div>User doesn't exist</div>}
+      </ReportsContainer> : <div>User doesn't exist</div>}
     </>
   )
 }
