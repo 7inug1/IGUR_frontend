@@ -10,16 +10,29 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+const ImageContainer = styled.div`text-align: center`;
 const Image = styled.img``;
-const Profile = styled.div``;
+const Profile = styled.div`text-align: center`;
 const Contents = styled.div``;
-const Name = styled.h2``;
-const Username = styled.h2``;
-const Introduction = styled.p``;
+const Name = styled.h2`
+  margin-top: 5px;
+`;
+const Username = styled.h2`margin-top: 20px`;
+const Introduction = styled.p`
+  margin-top: 40px;
+  ${'' /* text-align: left; */}
+`;
+const NumericsContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  ${'' /* grid-template-columns: repeat(3, 1fr); */}
+  margin-top: 40px;
+`;
 const NumberOfPosts = styled.div``;
 const NumberOfFollowers = styled.div``;
 const NumberOfFollowings = styled.div``;
 const Notification = styled.p``;
+const Bold = styled.b``;
 
 function Report({ setIsLoading, isLoading, response }) {
   let { username, reportId } = useParams();
@@ -46,17 +59,21 @@ function Report({ setIsLoading, isLoading, response }) {
 
   return (
     <>
-      <h1>Report</h1>
+      <h1 className='report-header report-title'>Report</h1>
       { dbUser ?
         <div>
           <Profile>
-            <Name>{dbUser?.reports[0].profile.name}</Name>
-            <Username>{dbUser?.reports[0].profile.username}</Username>
-            <Image src={dbUser?.reports[0].profile.profileImgSrc} alt={`${dbUser?.reports[0].profile.profileImgAlt} thumbnail`} />
+            <ImageContainer className='image-container'>
+              <Image src={dbUser?.reports[0].profile.profileImgSrc} alt={`${dbUser?.reports[0].profile.profileImgAlt} thumbnail`} />
+            </ImageContainer>
+            <Username className='username'>@{dbUser?.reports[0].profile.username}</Username>
+            <Name className='name'>{dbUser?.reports[0].profile.name}</Name>
             <Introduction>{dbUser?.reports[0].profile.introduction}</Introduction>
-            <NumberOfPosts><span>numberOfPosts</span>{dbUser?.reports[0].profile.numberOfPosts}</NumberOfPosts>
-            <NumberOfFollowers><span>numberOfFollowers</span>{dbUser?.reports[0].profile.numberOfFollowers}</NumberOfFollowers>
-            <NumberOfFollowings><span>numberOfFollowings</span>{dbUser?.reports[0].profile.numberOfFollowings}</NumberOfFollowings>
+            <NumericsContainer>
+              <NumberOfPosts><Bold>{dbUser?.reports[0].profile.numberOfPosts}</Bold><span> posts</span></NumberOfPosts>
+              <NumberOfFollowers><Bold>{dbUser?.reports[0].profile.numberOfFollowers}</Bold><span> followers</span></NumberOfFollowers>
+              <NumberOfFollowings><Bold>{dbUser?.reports[0].profile.numberOfFollowings}</Bold><span> followings</span></NumberOfFollowings>
+            </NumericsContainer>
           </Profile>
           <hr></hr>
           <Contents>
