@@ -7,6 +7,7 @@ const Location = styled.div`
 const Image = styled.img`
   max-width: 100%;
   height: auto;
+  border-radius: 4px;
 `;
 const ImageContainer = styled.div`
   width: 100%;
@@ -25,8 +26,11 @@ const DescriptionContainer = styled.div`
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   font-size: 18px;
+  max-height: 300px;
 `;
 const Description = styled.p`
+  overflow-y: scroll;
+  max-height: calc(300px - 100px);
   margin-top: 8px;
 `;
 const DatePosted = styled.div`
@@ -43,7 +47,6 @@ const Bold = styled.b``;
 
 const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numberOfReplies, datePosted, prediction }) => {
   const onModalClick = (e) => {
-    e.preventDefault();
     document.body.style.overflow = "visible";
     setOnModal(false);
   }

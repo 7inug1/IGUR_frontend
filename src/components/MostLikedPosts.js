@@ -6,7 +6,7 @@ import styled from "styled-components";
 const UL = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
+  grid-gap: 25px;
 `;
 
 function MostLikedPosts({ posts }) {

@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 const UL = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px;
+  grid-gap: 25px;
 `;
 
 function MostCommentedPosts({ posts }) {

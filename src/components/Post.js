@@ -5,16 +5,11 @@ import Portal from "./Portal";
 import Modal from "./Modal";
 
 const List = styled.li``;
-const Location = styled.div``;
 const Image = styled.img`
   width: 100%;
   object-fit: contain;
 `;
 const ImageContainer = styled.div``;
-const NumberOfLikes = styled.div``;
-const NumberOfReplies = styled.div``;
-const Description = styled.p``;
-const DatePosted = styled.div``;
 
 function Post({ location, imgSrc, description, numberOfLikes, numberOfReplies, datePosted, prediction }) {
   const [isClicked, setIsClicked] = useState(false);
