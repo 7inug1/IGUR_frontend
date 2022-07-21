@@ -46,12 +46,14 @@ const Bold = styled.b``;
 function Report({ setIsLoading, isLoading, response }) {
   let { username, reportId } = useParams();
   const [dbUser, setDBuser] = useState(null); 
-
+  
   useEffect(() => {
     async function fetchUser() {
-      const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
-
+      
       try {
+        // FIXME: This line is used in local environment.
+        // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+        const url = `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
         const response = await axios({
           method: "get",
           url,

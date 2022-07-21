@@ -65,7 +65,9 @@ const ReportContainer = styled.div`
   align-items: center;
   justify-content: right;
 `;
-const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
+// FIXME: This line is used in local environment.
+// const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
+const url = `https://igur.link/users`;
 
 function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
   const [dbUsers, setDBuser] = useState(null);

@@ -67,8 +67,9 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, u
 
   const onFormSubmit = async (e) => {
     const reportId = Date.now().toString();
-    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
-
+    // FIXME: This line is used in local environment.
+    // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
+    const url = `https://igur.link/users/${username}`;
     e.preventDefault();
     setIsLoading(true);
 

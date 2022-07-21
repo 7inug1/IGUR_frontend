@@ -32,16 +32,17 @@ const ProceedButton = styled.button`
   margin-top: 50px;
 `;
 const Notification = styled.p``;
-
 function Reports({ numberOfCrawls, username, setResponse, setIsLoading }) {
   const navigate = useNavigate();
   const [dbUser, setDBuser] = useState(null);
   const params = useParams();
-
+  
   useEffect(() => {
     async function fetchReports() {
       const username = params.username;
-      const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports` : `https://igur.link/users/${username}/reports`;
+      // FIXME: This line is used in local environment.
+      // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports` : `https://igur.link/users/${username}/reports`;
+      const url = `https://igur.link/users/${username}/reports`;
 
       try {
         const response = await axios({
