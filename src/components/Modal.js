@@ -5,13 +5,16 @@ const Location = styled.div`
   color: gray;
 `;
 const Image = styled.img`
+  display: block;
   max-width: 100%;
   height: auto;
-  border-radius: 4px;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin: 0 auto;
 `;
 const ImageContainer = styled.div`
   width: 100%;
-  text-align: center;
+  ${'' /* text-align: center; */}
   background: #000;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
