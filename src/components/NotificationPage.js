@@ -23,6 +23,9 @@ function NotificationPage({ notificationCode, setNotificationCode }) {
     if (notificationCode === "noAccount") {
       setNotificationMessage("There's no such account.");
     }
+    if (notificationCode === "isLoading") {
+      setNotificationMessage("Loading...");
+    }
     setNotificationCode(null);
   }, [notificationCode, setNotificationCode]);
 
@@ -30,7 +33,7 @@ function NotificationPage({ notificationCode, setNotificationCode }) {
     <Container>
       <Wrapper>
         { (typeof notificationMessage==="string") && <Message>{notificationMessage}</Message>}
-        { <Link to={"/"} className="button01" onClick={onButtonClick}>Back to Home</Link> }
+        { (notificationCode !== "isLoading") && <Link to={"/"} className="button01" onClick={onButtonClick}>Back to Home</Link> }
       </Wrapper>
     </Container>
   )
