@@ -7,7 +7,6 @@
 
 .logo {
   font-size: 50px;
-  /* font-weight: lighter; */
 }
 
 .image-container img {
@@ -45,6 +44,7 @@
 
 .link {
   display: block;
+  position: relative;
 }
 
 .slider-container::after {
