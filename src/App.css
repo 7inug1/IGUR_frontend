@@ -8,7 +8,7 @@
   opacity: 0.5;
 }
 
-.logo, .report-header, .most-liked-header, .most-commented-header {
+.logo, .report-header, .most-liked-header, .most-commented-header, .list-header {
   font-family: 'Lobster', cursive;
   font-weight: lighter;
 }
@@ -109,6 +109,17 @@
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
+}
+
+.reports-list-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  padding: 25px;
+}
+
+@media only screen and (max-width: 620px) {
+
 }
 
 @media only screen {

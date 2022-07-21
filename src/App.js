@@ -54,12 +54,12 @@ function App() {
           </Logo>
         </Link>
       </Header>
-      { (!isLoading) &&
+      { !isLoading &&
         <Wrapper>
           <Routes>
             <Route path="/" element={<Leaderboard setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />} />
             <Route path="/users/:username/reports/:reportId" element={<Report response={response} setIsLoading={setIsLoading} isLoading={isLoading} />}></Route>
-            <Route path="/users/:username/reports" element={<Reports response={response} setResponse={setResponse} numberOfCrawls={numberOfCrawls} username={username} />}></Route>
+            <Route path="/users/:username/reports" element={<Reports response={response} setResponse={setResponse} numberOfCrawls={numberOfCrawls} username={username} setIsLoading={setIsLoading} />}></Route>
             <Route path="/errors" element={<NotificationPage notificationCode={notificationCode} setNotificationCode={setNotificationCode} />}></Route>
             <Route path="/*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -71,6 +71,10 @@ function App() {
             </ul>
           </Footer>
         </Wrapper>
+      }
+      {
+        isLoading &&
+        <NotificationPage notificationCode={"isLoading"} setNotificationCode={setNotificationCode} />
       }
       <div id="modal-portal"></div>
     </>
