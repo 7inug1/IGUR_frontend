@@ -53,7 +53,7 @@ function Report({ setIsLoading, isLoading, response }) {
       try {
         // FIXME: This line is used in local environment.
         // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
-        const url = `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+        const url = `http://localhost:8080/users/${username}/reports/${reportId}`;
         const response = await axios({
           method: "get",
           url,

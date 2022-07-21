@@ -42,7 +42,7 @@ function Reports({ numberOfCrawls, username, setResponse, setIsLoading }) {
       const username = params.username;
       // FIXME: This line is used in local environment.
       // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports` : `https://igur.link/users/${username}/reports`;
-      const url = `https://igur.link/users/${username}/reports`;
+      const url = `http://localhost:8080/users/${username}/reports`;
 
       try {
         const response = await axios({
@@ -61,7 +61,9 @@ function Reports({ numberOfCrawls, username, setResponse, setIsLoading }) {
 
   const onButtonClick = async () => {
     const reportId = Date.now().toString();
-    const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+    // FIXME: This line is used in local environment.
+    // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports/${reportId}` : `https://igur.link/users/${username}/reports/${reportId}`;
+    const url = `http://localhost:8080/users/${username}/reports/${reportId}`;
 
     setIsLoading(true);
 
