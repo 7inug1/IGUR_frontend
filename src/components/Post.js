@@ -18,7 +18,6 @@ function Post({ location, imgSrc, description, numberOfLikes, numberOfReplies, d
     isClicked ? setIsClicked(false) : setIsClicked(true);
   }
   const onPostClick = () => {
-    console.log("hello");
     document.body.style.overflow = "hidden";
     setOnModal(true);
   }

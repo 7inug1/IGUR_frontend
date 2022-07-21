@@ -88,7 +88,7 @@ function EntitiesGraph({ posts }) {
 
   return (
     <>
-      <h1>Entities Graph</h1>
+      <h2>Entities Graph</h2>
       <div id='chartArea'>
         {
           Object.keys(entitiesCounter).length ? <svg ref={svgRef} /> : ""

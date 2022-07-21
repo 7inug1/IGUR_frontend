@@ -5,7 +5,12 @@ import { useState, useEffect } from "react";
 const UL = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 25px;
+  grid-gap: 1%;
+`;
+const MostCommentedHeader = styled.h2`
+  font-size: 30px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 `;
 
 function MostCommentedPosts({ posts }) {
@@ -51,7 +56,7 @@ function MostCommentedPosts({ posts }) {
 
   return (
     <>
-      <h1>Most Commented</h1>
+      <MostCommentedHeader className='most-commented-header'>Most-Commented Posts</MostCommentedHeader>
       <UL>
         {
           printSortedContents()

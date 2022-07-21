@@ -1,4 +1,6 @@
+import { useState } from 'react';
 import Portal from "./Portal";
+import Canvas from './Canvas';
 import styled from "styled-components";
 
 const Location = styled.div`
@@ -49,18 +51,21 @@ const Wrapper = styled.div`
 const Bold = styled.b``;
 
 const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numberOfReplies, datePosted, prediction }) => {
+  const [isClicked, setIsClicked] = useState(false);
   const onModalClick = (e) => {
     document.body.style.overflow = "visible";
     setOnModal(false);
+  }
+  const onImageClick = () => {
+    isClicked ? setIsClicked(false) : setIsClicked(true);
   }
   return (
     <Portal>
       <ModalContainer className="modal-container">
         <ModalComponent className="modal">
           <Wrapper className="modal-wrapper">
-            <ImageContainer>
-              <Image src={imgSrc} alt={description} />
-            </ImageContainer>
+            {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
+            {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
             <DescriptionContainer>
               <Location>{location ? `@${location}` : ""}</Location>
               <Description>{description}</Description>

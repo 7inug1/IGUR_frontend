@@ -8,7 +8,7 @@
   opacity: 0.5;
 }
 
-.logo, .report-header {
+.logo, .report-header, .most-liked-header, .most-commented-header {
   font-family: 'Lobster', cursive;
   font-weight: lighter;
 }

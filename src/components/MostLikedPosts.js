@@ -3,10 +3,15 @@ import { useState, useEffect } from "react";
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import styled from "styled-components";
 
+const MostLikedHeader = styled.h2`
+  font-size: 30px;
+  padding-top: 20px;
+  margin-bottom: 20px;
+`;
 const UL = styled.ul`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  grid-gap: 25px;
+  grid-gap: 1%;
 `;
 
 function MostLikedPosts({ posts }) {
@@ -76,7 +81,7 @@ function MostLikedPosts({ posts }) {
 
   return (
     <>
-      <h1>Most Liked</h1>
+      <MostLikedHeader className="most-liked-header">Most-Liked Posts</MostLikedHeader>
       <UL>
         { printSortedContents(sortedPosts) }
       </UL>

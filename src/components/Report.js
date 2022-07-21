@@ -10,9 +10,15 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+const ReportContainer = styled.div`
+  border: 2px solid black;
+  padding: 30px 5px;
+`;
 const ImageContainer = styled.div`text-align: center`;
 const Image = styled.img``;
-const Profile = styled.div`text-align: center`;
+const Profile = styled.div`
+  text-align: center;
+`;
 const Contents = styled.div``;
 const Name = styled.h2`
   margin-top: 5px;
@@ -27,6 +33,9 @@ const NumericsContainer = styled.div`
   justify-content: space-around;
   ${'' /* grid-template-columns: repeat(3, 1fr); */}
   margin-top: 40px;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 20px 0;
 `;
 const NumberOfPosts = styled.div``;
 const NumberOfFollowers = styled.div``;
@@ -58,8 +67,8 @@ function Report({ setIsLoading, isLoading, response }) {
   }, [dbUser, reportId, username]);
 
   return (
-    <>
-      <h1 className='report-header report-title'>Report</h1>
+    <ReportContainer>
+      <h2 className='report-header report-title'>Report</h2>
       { dbUser ?
         <div>
           <Profile>
@@ -75,7 +84,6 @@ function Report({ setIsLoading, isLoading, response }) {
               <NumberOfFollowings><Bold>{dbUser?.reports[0].profile.numberOfFollowings}</Bold><span> followings</span></NumberOfFollowings>
             </NumericsContainer>
           </Profile>
-          <hr></hr>
           <Contents>
             <MostLikedPosts posts={dbUser?.reports[0].contents.posts} />
             <MostCommentedPosts posts={dbUser?.reports[0].contents.posts} />
@@ -87,7 +95,7 @@ function Report({ setIsLoading, isLoading, response }) {
         </div>
         : <Notification className='notification'>Report doesn't exist</Notification>
       }
-    </>
+    </ReportContainer>
   );
 }
 
