@@ -21,18 +21,14 @@ const ListItem = styled.li`
   border-bottom: 1px solid black;
   padding: 25px;
 `;
-const ListContainer = styled.div`
-  min-height: 150px;
-  display: grid;
-  grid-template-columns: 3fr 3fr 2fr;
-  gap: 30px;
-`;
+const ListContainer = styled.div``;
 const Username = styled.h2`
 `;
 const Name = styled.h2`
   margin-top: 20px;
 `;
 const Img = styled.img``;
+const FollowContainer = styled.div``;
 const NumberOfFollowers = styled.div`
   margin-top: 20px;
 `;
@@ -52,19 +48,9 @@ const ImageContainer = styled.div`
   justify-content: left;
   align-items: center;
 `;
-const InfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: left;
-  padding-left: 25%;
-`;
-const Wrapper = styled.div`
-  text-align: left;
-`;
+const InfoContainer = styled.div``;
+const Wrapper = styled.div``;
 const ReportContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: right;
 `;
 // FIXME: This line is used in local environment.
 // const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
@@ -102,25 +88,27 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
             return [
               <ListItem key={index}>
                 <Link to={`users/${user.username}/reports`} className="link">
-                  <ListContainer>
+                  <ListContainer className='list-container'>
                     <ImageContainer className='image-container'>
                       <Img src={user.reports[0].profile.profileImgSrc} />
                     </ImageContainer>
-                    <InfoContainer>
-                      <Wrapper>
+                    <InfoContainer className='info-container'>
+                      <Wrapper className='wrapper'>
                         <Username className='username'>@{user.username}</Username>
                         <Name className='name'>{user.reports[0].profile.name}</Name>
-                        <NumberOfFollowers>
+                        <FollowContainer className='follow-container'>
+                          <NumberOfFollowers>
                           <Label>Followers</Label> 
                           <Value>{user.reports[0].profile.numberOfFollowers}</Value>
-                        </NumberOfFollowers>
-                        <NumberOfFollowings>
-                          <Label>Followings</Label> 
-                          <Value>{user.reports[0].profile.numberOfFollowings}</Value>
-                        </NumberOfFollowings>
+                          </NumberOfFollowers>
+                          <NumberOfFollowings>
+                            <Label>Followings</Label> 
+                            <Value>{user.reports[0].profile.numberOfFollowings}</Value>
+                          </NumberOfFollowings>
+                          </FollowContainer>
                       </Wrapper>
                     </InfoContainer>
-                    <ReportContainer>
+                    <ReportContainer className='report-container'>
                       <Wrapper>
                         <NumberOfReports>{user.reports.length < 2 ? `${user.reports.length} report` : `${user.reports.length} reports`}</NumberOfReports>
                       </Wrapper>
