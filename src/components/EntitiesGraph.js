@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import styled from "styled-components";
 
-const VIEWBOX_X = 800;
+const VIEWBOX_X = 1200;
 const VIEWBOX_Y = VIEWBOX_X;
 const TRANSLATE_X = VIEWBOX_X / 2;
 const TRANSLATE_Y = TRANSLATE_X;

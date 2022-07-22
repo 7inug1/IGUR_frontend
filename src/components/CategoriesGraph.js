@@ -3,7 +3,7 @@ import { useRef, useState, useEffect } from "react";
 import useDeepCompareEffect from 'use-deep-compare-effect';
 import styled from "styled-components";
 
-const VIEWBOX_X = 800;
+const VIEWBOX_X = 1200;
 const VIEWBOX_Y = VIEWBOX_X;
 const TRANSLATE_X = VIEWBOX_X / 2;
 const TRANSLATE_Y = TRANSLATE_X;
@@ -53,7 +53,7 @@ function CategoriesGraph({ posts }) {
       const FIRST_LINE_LENGTH_SCALE = 0.6;
       const SECOND_LINE_LENGTH_SCALE = 0.8;
       const THIRD_LINE_LENGTH_SCALE = 1;
-      const LABEL_POSITION_SCALE = 0.4;
+      const LABEL_POSITION_SCALE = 0.3;
       for (const [key, value] of Object.entries(categoriesCounter)) {
         formattedData.push({category: key, count: value});
       }
@@ -94,7 +94,7 @@ function CategoriesGraph({ posts }) {
         .on('mouseout', () => {
           tooldiv.style('visibility', 'hidden')
         });
-      
+
       svg
         .selectAll('allPolylines')
         .data(pieData)
@@ -103,23 +103,21 @@ function CategoriesGraph({ posts }) {
         .style("fill", "none")
         .attr("stroke-width", 1)
         .attr('points', (d) => {
-          const posA = arc.centroid(d) // line insertion in the slice
-          const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-          const posC = outerArc.centroid(d); // Label position = almost the same as posB
+          const posA = arc.centroid(d)
+          const posB = outerArc.centroid(d)
+          const posC = outerArc.centroid(d);
           const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
 
           posC[0] = RADIUS * THIRD_LINE_LENGTH_SCALE * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
           const lines = [posA, posB, posC];
           console.log("lines", lines);
-          
+
           return lines;
         });
-        
+
         svg
           .selectAll('allLabels')
           .data(pieData)
-          // .append('foreignObject')
-          // .join('foreignObject')
           .join('text')
           .text(d => d.data.category)
           .attr('transform', function (d) {
@@ -143,7 +141,7 @@ function CategoriesGraph({ posts }) {
         Object.keys(categoriesCounter).length ?
           <>
             <div id='chartArea'>
-              <svg ref={svgRef} viewBox={`0 0 ${VIEWBOX_X} ${VIEWBOX_Y}`} />
+              <svg className="categories" ref={svgRef} viewBox={`0 0 ${VIEWBOX_X} ${VIEWBOX_Y}`} />
             </div>
           </> :
           <Paragraph>No categories found.</Paragraph>
