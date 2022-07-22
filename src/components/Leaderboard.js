@@ -56,6 +56,7 @@ const InfoContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: left;
+  padding-left: 25%;
 `;
 const Wrapper = styled.div`
   text-align: left;
