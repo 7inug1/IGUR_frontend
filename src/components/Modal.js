@@ -17,12 +17,11 @@ const Image = styled.img`
   margin: 0 auto;
 `;
 const ImageContainer = styled.div`
-  ${'' /* display: block; */}
-  max-width: 100%;
-  height: auto;
+  margin: 0 auto;
+  position: relative;
+  background: #000;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  ${'' /* margin: 0 auto; */}
 `;
 const NumberOfLikes = styled.div`
   margin-top: 20px;
@@ -55,6 +54,19 @@ const ModalContainer = styled.div``;
 const ModalComponent = styled.div``;
 const Wrapper = styled.div`
 `;
+const IconContainer = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0f121c;
+`;
 const Bold = styled.b``;
 
 const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numberOfReplies, datePosted, prediction }) => {
@@ -71,10 +83,24 @@ const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numbe
       <ModalContainer className="modal-container">
         <ModalComponent className="modal">
           <Wrapper className="modal-wrapper">
-            <ImageContainer>
-              {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
-              {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
-            </ImageContainer>
+            {
+              !prediction.length &&
+                <ImageContainer>
+                  <Image src={imgSrc} alt={description} />
+                </ImageContainer>
+              }
+              {
+                prediction.length ? (
+                  <ImageContainer className='clickable-image-container'>
+                    <IconContainer>
+                      <svg aria-label="태그" color="#ffffff" fill="#ffffff" height="12" role="img" viewBox="0 0 24 24" width="12"><path d="M21.334 23H2.666a1 1 0 01-1-1v-1.354a6.279 6.279 0 016.272-6.272h8.124a6.279 6.279 0 016.271 6.271V22a1 1 0 01-1 1zM12 13.269a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path><path d="M21.334 23H2.666a1 1 0 01-1-1v-1.354a6.279 6.279 0 016.272-6.272h8.124a6.279 6.279 0 016.271 6.271V22a1 1 0 01-1 1zM12 13.269a6 6 0 116-6 6.007 6.007 0 01-6 6z"></path></svg>
+                    </IconContainer>
+                      {/* <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} /> */}
+                    {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
+                    {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
+                  </ImageContainer>
+                ) : ""
+              }
             <DescriptionContainer>
               {location && <Location>{location}</Location>}
               <Description>{description}</Description>

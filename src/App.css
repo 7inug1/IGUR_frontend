@@ -8,7 +8,13 @@
   opacity: 0.5;
 }
 
-.logo, .report-header, .most-liked-header, .most-commented-header, .list-header {
+.logo, 
+.report-header, 
+.most-liked-header, 
+.most-commented-header, 
+.list-header,
+.categories-graph-header,
+.entities-graph-header {
   font-family: 'Lobster', cursive;
   font-weight: lighter;
 }
@@ -31,7 +37,7 @@
 
 .image-container img {
   border-radius: 50%;
-  border: 1px solid black;
+  border: 1px solid #afafaf;
 }
 
 .report-header {
@@ -117,6 +123,10 @@
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
   padding: 25px;
+}
+
+.clickable-image-container:hover {
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 620px) {

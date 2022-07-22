@@ -2,8 +2,11 @@ import { useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const CanvasFrame = styled.canvas`
-  width: 100%;
-  object-fit: contain;
+  max-width: 100%;
+  display: block;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  margin: 0 auto;
 `;
 
 function Canvas({ src, prediction, setIsClicked }) {
@@ -20,30 +23,45 @@ function Canvas({ src, prediction, setIsClicked }) {
     canvas.width = 640;
     canvas.height = 640;
     img.src = src;
+
     img.onload = () => {
       ctx.drawImage(img, 0, 0, 640, 640);
 
       if (prediction?.length) {
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = 'green';
-        ctx.fillStyle = 'green';
-        ctx.font = "50px Georgia";
+        const FONT = "14px Arial";
+        const textHeight = parseInt(FONT);
 
-        for (let i = 0; i < prediction.length; i++) {
-          ctx.beginPath();
-          ctx.rect(...prediction[i].bbox);
-          ctx.stroke();
+        ctx.lineWidth = 3;
+        ctx.font = "bolder " + FONT;
+
+        prediction.forEach((pred) => {
+          const text = pred.class;
+          const TEXT_WIDTH = ctx.measureText(text).width;
+          const TEXT_CENTER_POINT = pred.bbox[0] + (pred.bbox[2] / 2) - (TEXT_WIDTH / 2);
+          const PADDING = 7;
+
+          ctx.strokeStyle = "#000";
+          ctx.fillStyle = "#000";
+          ctx.strokeRect(TEXT_CENTER_POINT - PADDING, pred.bbox[1], TEXT_WIDTH + PADDING + PADDING, textHeight + PADDING);
+          ctx.globalAlpha = 0.2;
+          ctx.fillRect(...pred.bbox);
+          ctx.globalAlpha = 0.9;
+          ctx.fillRect(TEXT_CENTER_POINT - PADDING, pred.bbox[1], TEXT_WIDTH + PADDING + PADDING, textHeight + PADDING);
+          ctx.globalAlpha = 1.0;
+          ctx.strokeStyle = '#000';
+          ctx.strokeRect(...pred.bbox);
+          ctx.fillStyle = "#fff";
           ctx.fillText(
-            (prediction[i].score.toFixed(2)) * 100 + '% ' + prediction[i].class, prediction[i].bbox[0],
-            prediction[i].bbox[1] > 10 ? prediction[i].bbox[1] - 5 : 10);
-        }
+            text, TEXT_CENTER_POINT,
+            pred.bbox[1] + textHeight);
+        });
       }
     };
   }, [prediction, src]);
 
   return (
     <>
-      <CanvasFrame ref={canvasRef} onClick={onCanvasClick}></CanvasFrame>
+      <CanvasFrame ref={canvasRef} onClick={onCanvasClick} className="responsive-canvas"></CanvasFrame>
     </>
   )
 }
