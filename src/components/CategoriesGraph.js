@@ -53,7 +53,7 @@ function CategoriesGraph({ posts }) {
       const FIRST_LINE_LENGTH_SCALE = 0.6;
       const SECOND_LINE_LENGTH_SCALE = 0.8;
       const THIRD_LINE_LENGTH_SCALE = 1;
-      const LABEL_POSITION_SCALE = 0.3;
+      const LABEL_POSITION_SCALE = 0.7;
       for (const [key, value] of Object.entries(categoriesCounter)) {
         formattedData.push({category: key, count: value});
       }
@@ -61,8 +61,8 @@ function CategoriesGraph({ posts }) {
       const pieData = d3.pie().value(d => d.count)(formattedData);
       const arc = d3.arc().innerRadius(RADIUS * 0.25).outerRadius(RADIUS * 0.6);
       const outerArc = d3.arc()
-        .innerRadius(RADIUS * FIRST_LINE_LENGTH_SCALE)
-        .outerRadius(RADIUS * SECOND_LINE_LENGTH_SCALE);
+        .innerRadius(RADIUS + 0.2)
+        .outerRadius(RADIUS + 0.5);
       const color = d3.scaleOrdinal()
         .range(d3.schemeSet3);
 
