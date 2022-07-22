@@ -20,12 +20,14 @@ function Canvas({ src, prediction, setIsClicked }) {
     const ctx = canvas.getContext("2d");
     const img = new Image();
 
-    canvas.width = 640;
-    canvas.height = 640;
     img.src = src;
+    const IMG_WIDTH = img.width;
+    const IMG_HEIGHT = img.height;
+    canvas.width = IMG_WIDTH;
+    canvas.height = IMG_HEIGHT;
 
     img.onload = () => {
-      ctx.drawImage(img, 0, 0, 640, 640);
+      ctx.drawImage(img, 0, 0, IMG_WIDTH, IMG_HEIGHT);
 
       if (prediction?.length) {
         const FONT = "14px Arial";
