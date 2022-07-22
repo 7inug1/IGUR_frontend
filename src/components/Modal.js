@@ -5,6 +5,8 @@ import styled from "styled-components";
 
 const Location = styled.div`
   color: gray;
+  font-size: 14px;
+  margin-bottom: 20px;
 `;
 const Image = styled.img`
   display: block;
@@ -23,8 +25,11 @@ const ImageContainer = styled.div`
 `;
 const NumberOfLikes = styled.div`
   margin-top: 20px;
+  font-size: 16px;
 `;
-const NumberOfReplies = styled.div``;
+const NumberOfReplies = styled.div`
+  font-size: 16px;
+`;
 const DescriptionContainer = styled.div`
   padding: 20px;
   background: #fff;
@@ -41,6 +46,7 @@ const Description = styled.p`
 const DatePosted = styled.div`
   margin-top: 20px;
   color: gray;
+  font-size: 14px;
 `;
 const Dim = styled.div`
 `;
@@ -67,7 +73,7 @@ const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numbe
             {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
             {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
             <DescriptionContainer>
-              <Location>{location ? `@${location}` : ""}</Location>
+              {location && <Location>{location}</Location>}
               <Description>{description}</Description>
               <NumberOfLikes><Bold>{numberOfLikes}</Bold> likes</NumberOfLikes>
               <NumberOfReplies><Bold>{numberOfReplies}</Bold> replies</NumberOfReplies>
