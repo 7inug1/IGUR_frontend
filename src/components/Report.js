@@ -9,6 +9,7 @@ import EntitiesGraph from "./EntitiesGraph";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { addThousandsSeparator } from "../util/util";
 
 const ReportContainer = styled.div`
   position: relative;
@@ -33,12 +34,10 @@ const Name = styled.h2`
 const Username = styled.h2`margin-top: 20px`;
 const Introduction = styled.p`
   margin-top: 40px;
-  ${'' /* text-align: left; */}
 `;
 const NumericsContainer = styled.div`
   display: flex;
   justify-content: space-around;
-  ${'' /* grid-template-columns: repeat(3, 1fr); */}
   margin-top: 40px;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
@@ -89,9 +88,9 @@ function Report({ setIsLoading, isLoading, response }) {
             <Name className='name'>{dbUser?.reports[0].profile.name}</Name>
             <Introduction>{dbUser?.reports[0].profile.introduction}</Introduction>
             <NumericsContainer>
-              <NumberOfPosts><Bold>{dbUser?.reports[0].profile.numberOfPosts}</Bold><span> posts</span></NumberOfPosts>
-              <NumberOfFollowers><Bold>{dbUser?.reports[0].profile.numberOfFollowers}</Bold><span> followers</span></NumberOfFollowers>
-              <NumberOfFollowings><Bold>{dbUser?.reports[0].profile.numberOfFollowings}</Bold><span> followings</span></NumberOfFollowings>
+              <NumberOfPosts><Bold>{addThousandsSeparator(dbUser?.reports[0].profile.numberOfPosts)}</Bold><span> posts</span></NumberOfPosts>
+              <NumberOfFollowers><Bold>{addThousandsSeparator(dbUser?.reports[0].profile.numberOfFollowers)}</Bold><span> followers</span></NumberOfFollowers>
+              <NumberOfFollowings><Bold>{addThousandsSeparator(dbUser?.reports[0].profile.numberOfFollowings)}</Bold><span> followings</span></NumberOfFollowings>
             </NumericsContainer>
           </Profile>
           <Contents>

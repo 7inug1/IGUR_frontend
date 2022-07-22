@@ -13,6 +13,11 @@ const UL = styled.ul`
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 1%;
 `;
+const Message = styled.p`
+  font-size: 25px;
+  text-align: center;
+  margin-top: 40px;
+`;
 
 function MostLikedPosts({ posts }) {
   const [sortedPosts, setSortedPosts] = useState({});
@@ -35,7 +40,9 @@ function MostLikedPosts({ posts }) {
     const array = [];
 
     if (sortedPosts?.length) {
-      for (let i = 0; i < NUMBER_OF_POSTS_TO_SHOW; i++) {
+      const numberOfLoops = sortedPosts.length < NUMBER_OF_POSTS_TO_SHOW ? sortedPosts.length : NUMBER_OF_POSTS_TO_SHOW;
+
+      for (let i = 0; i < numberOfLoops; i++) {
         const post = sortedPosts[i];
 
         array.push(
@@ -51,8 +58,6 @@ function MostLikedPosts({ posts }) {
           />
         );
       }
-    } else {
-      array.push(<div>no posts to show</div>);
     }
 
     return array;
@@ -82,9 +87,12 @@ function MostLikedPosts({ posts }) {
   return (
     <>
       <MostLikedHeader className="most-liked-header">Most-Liked Posts</MostLikedHeader>
-      <UL>
-        { printSortedContents(sortedPosts) }
-      </UL>
+      {sortedPosts?.length &&
+        <UL>
+          {printSortedContents(sortedPosts)}
+        </UL>
+      }
+      {!sortedPosts?.length && <Message>no posts to show</Message>}
     </>
   );
 }

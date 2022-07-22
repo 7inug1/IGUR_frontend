@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { TailSpin } from "react-loader-spinner";
 
 const Container = styled.div`
   display: flex;
@@ -9,7 +10,12 @@ const Container = styled.div`
   min-height: calc(100vh - 142px);
 `;
 const Wrapper = styled.div``;
-const Message = styled.p`margin-bottom: 50px`;
+const Message = styled.p`
+  margin-bottom: 50px;
+  text-align: center;
+  font-weight: bolder;
+  font-size: 25px;
+`;
 
 function NotificationPage({ notificationCode, setNotificationCode }) {
   const onButtonClick = () => {
@@ -32,7 +38,17 @@ function NotificationPage({ notificationCode, setNotificationCode }) {
   return (
     <Container>
       <Wrapper>
-        { (typeof notificationMessage==="string") && <Message>{notificationMessage}</Message>}
+        {((typeof notificationMessage === "string") && notificationMessage !== "Loading...") && <Message>{notificationMessage}</Message>}
+        {(notificationMessage === "Loading...")
+          &&
+          <>
+          <Message>loading ...</Message>
+          <TailSpin
+            color="#000"
+            height={100}
+            width={100} 
+          />
+          </>}
         { (notificationCode !== "isLoading") && <Link to={"/"} className="button01" onClick={onButtonClick}>Back to Home</Link> }
       </Wrapper>
     </Container>

@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import InstagramUserInput from './InstagramUserInput';
+import { addThousandsSeparator } from "../util/util";
 
 const Container = styled.div`
   margin-top: 50px;
@@ -19,7 +20,6 @@ const ListItem = styled.li`
   }
   background: #fff;
   border-bottom: 1px solid black;
-  padding: 25px;
 `;
 const ListContainer = styled.div``;
 const Username = styled.h2`
@@ -99,11 +99,11 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
                         <FollowContainer className='follow-container'>
                           <NumberOfFollowers>
                           <Label>Followers</Label> 
-                          <Value>{user.reports[0].profile.numberOfFollowers}</Value>
+                          <Value>{addThousandsSeparator(user.reports[0].profile.numberOfFollowers)}</Value>
                           </NumberOfFollowers>
                           <NumberOfFollowings>
                             <Label>Followings</Label> 
-                            <Value>{user.reports[0].profile.numberOfFollowings}</Value>
+                            <Value>{addThousandsSeparator(user.reports[0].profile.numberOfFollowings)}</Value>
                           </NumberOfFollowings>
                           </FollowContainer>
                       </Wrapper>

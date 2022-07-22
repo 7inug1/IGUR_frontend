@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
+import { addThousandsSeparator } from "../util/util";
 
 const ReportsContainer = styled.div``;
 const Title = styled.h2`
@@ -104,7 +105,7 @@ function Reports({ numberOfCrawls, username, setResponse, setIsLoading }) {
                   <Report key={index}>
                     <Link to={`${report.id}`} className="link reports-list-container">
                       <PostIndex>{index + 1}</PostIndex>
-                      <NumberOfCrawls>{report.contents?.posts.length}</NumberOfCrawls>
+                      <NumberOfCrawls>{addThousandsSeparator(report.contents?.posts.length)}</NumberOfCrawls>
                       <DateCreated>{(new Date(Number(report.id))).toLocaleString("en-us", { dateStyle: "short", timeStyle: "short" })}</DateCreated>
                     </Link>
                   </Report>

@@ -12,18 +12,26 @@ const MostCommentedHeader = styled.h2`
   margin-top: 40px;
   margin-bottom: 20px;
 `;
+const Message = styled.p`
+  font-size: 25px;
+  text-align: center;
+  margin-top: 40px;
+`;
 
 function MostCommentedPosts({ posts }) {
   const [sortedPosts, setSortedPosts] = useState(null);
-
-  // const sortedContents = sortedPosts.posts.sort((a, b) => b.numberOfReplies - a.numberOfReplies);
+  console.log("posts", posts);
+  
   const NUMBER_OF_POSTS_TO_SHOW = 6;
   const printSortedContents = () => {
     const array = [];
 
-    if (sortedPosts?.length) { 
-      for (let i = 0; i < NUMBER_OF_POSTS_TO_SHOW; i++) {
+    if (sortedPosts?.length) {
+      const numberOfLoops = sortedPosts.length < NUMBER_OF_POSTS_TO_SHOW ? sortedPosts.length : NUMBER_OF_POSTS_TO_SHOW;
+      
+      for (let i = 0; i < numberOfLoops; i++) {
         const post = sortedPosts[i];
+        console.log("post", post);
         
         array.push(
           <Post
@@ -38,8 +46,6 @@ function MostCommentedPosts({ posts }) {
           />
         );
       }
-    } else {
-      array.push(<div>no posts to show</div>);
     }
 
     return array;
@@ -57,11 +63,14 @@ function MostCommentedPosts({ posts }) {
   return (
     <>
       <MostCommentedHeader className='most-commented-header'>Most-Commented Posts</MostCommentedHeader>
-      <UL>
-        {
-          printSortedContents()
-        }
-      </UL>
+      {sortedPosts?.length &&
+        <UL>
+          {
+            printSortedContents()
+          }
+        </UL>
+      }
+      {!sortedPosts?.length && <Message>no posts to show</Message>}
     </>
   );
 }

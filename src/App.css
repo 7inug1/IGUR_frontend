@@ -31,6 +31,10 @@
   justify-content: right;
 }
 
+.follow-container {
+  text-align: left;
+}
+
 .modal-background {
   position: absolute;
   width: 100%;
@@ -69,6 +73,7 @@
 .image-container img {
   border-radius: 50%;
   border: 1px solid #afafaf;
+  max-width: 150px;
 }
 
 .report-header {
@@ -103,6 +108,7 @@
 .link {
   display: block;
   position: relative;
+  padding: 25px;
 }
 
 .slider-container::after {
@@ -196,8 +202,13 @@ svg text {
     display: block;
   }
 
-  .follow-container {
-    text-align: left;
+  .follow-container div {
+    display: inline-block;
+    text-align: center;
+  }
+
+  .follow-container div + div {
+    margin-left: 20px;
   }
 }
 
