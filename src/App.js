@@ -8,10 +8,10 @@ import NotificationPage from './components/NotificationPage';
 import Leaderboard from './components/Leaderboard';
 
 const Wrapper = styled.div`
-  padding: 50px;
+  ${'' /* padding: 50px;
   text-align: center;
   min-height: calc(100vh - 200px);
-  box-sizing: border-box;
+  box-sizing: border-box; */}
 `;
 const Header = styled.div`
   display: flex;
@@ -55,7 +55,7 @@ function App() {
         </Link>
       </Header>
       { !isLoading &&
-        <Wrapper>
+        <Wrapper className='wrapper'>
           <Routes>
             <Route path="/" element={<Leaderboard setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />} />
             <Route path="/users/:username/reports/:reportId" element={<Report response={response} setIsLoading={setIsLoading} isLoading={isLoading} />}></Route>

@@ -1,14 +1,25 @@
 import * as d3 from "d3";
 import { useRef, useState, useEffect } from "react";
 import useDeepCompareEffect from 'use-deep-compare-effect';
+import styled from "styled-components";
 
 const VIEWBOX_X = 800;
 const VIEWBOX_Y = VIEWBOX_X;
 const TRANSLATE_X = VIEWBOX_X / 2;
 const TRANSLATE_Y = TRANSLATE_X;
+const CategoriesGraphHeader = styled.h2`
+  font-size: 30px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+`;
+const Paragraph = styled.p`
+  margin-top: 40px;
+  font-size: 25px;
+`;
 
 function CategoriesGraph({ posts }) {
   const [categoriesCounter, setCategoriesCounter] = useState({});
+  const svgRef = useRef();
 
   useEffect(() => {
     const getCategoriesCounter = () => {
@@ -22,8 +33,6 @@ function CategoriesGraph({ posts }) {
             const mostRelevantCategory = categories[0];
 
             categoriesCounter[mostRelevantCategory.name] ? categoriesCounter[mostRelevantCategory.name]++ : categoriesCounter[mostRelevantCategory.name] = 1;
-          } else {
-            categoriesCounter["undefined"] ? categoriesCounter["undefined"]++ : categoriesCounter["undefined"] = 1;
           }
         });
       }
@@ -36,26 +45,25 @@ function CategoriesGraph({ posts }) {
     setCategoriesCounter(categoriesCounter);
   }, [posts]);
 
-  const svgRef = useRef();
-
   useDeepCompareEffect(() => {
     if (Object.keys(categoriesCounter).length) {
       const WIDTH = VIEWBOX_X * (2/3);
       const RADIUS = WIDTH / 2;
       const formattedData = [];
-
+      const FIRST_LINE_LENGTH_SCALE = 0.6;
+      const SECOND_LINE_LENGTH_SCALE = 0.8;
+      const THIRD_LINE_LENGTH_SCALE = 1;
+      const LABEL_POSITION_SCALE = 0.4;
       for (const [key, value] of Object.entries(categoriesCounter)) {
         formattedData.push({category: key, count: value});
       }
 
       const pieData = d3.pie().value(d => d.count)(formattedData);
-      console.log("pieData", pieData);
-      const arc = d3.arc().innerRadius(RADIUS / 2).outerRadius(RADIUS);
+      const arc = d3.arc().innerRadius(RADIUS * 0.25).outerRadius(RADIUS * 0.6);
       const outerArc = d3.arc()
-        .innerRadius(RADIUS * 1.1)
-        .outerRadius(RADIUS * 1.1);
+        .innerRadius(RADIUS * FIRST_LINE_LENGTH_SCALE)
+        .outerRadius(RADIUS * SECOND_LINE_LENGTH_SCALE);
       const color = d3.scaleOrdinal()
-        // .domain(Object.keys(formattedData))
         .range(d3.schemeSet3);
 
       const svg = d3.select(svgRef.current)
@@ -73,7 +81,7 @@ function CategoriesGraph({ posts }) {
         .data(pieData)
         .join('path')
         .attr('d', arc)
-        .attr('fill', (d, i) => color(i))
+        .attr('fill', (i) => color(i))
         .attr('stroke', 'white')
         .on('mouseover', (event, d) => {
           tooldiv.style('visibility', 'visible')
@@ -87,53 +95,58 @@ function CategoriesGraph({ posts }) {
           tooldiv.style('visibility', 'hidden')
         });
       
-        svg
-          .selectAll('allPolylines')
-          .data(pieData)
-          .join('polyline')
-          .attr("stroke", "black")
-          .style("fill", "none")
-          .attr("stroke-width", 1)
-          .attr('points', (d) => {
-            const posA = arc.centroid(d) // line insertion in the slice
-            const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-            const posC = outerArc.centroid(d); // Label position = almost the same as posB
-            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-
-            posC[0] = RADIUS * 1.1 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-
-            return [posA, posB, posC];
-          });
-        
       svg
-        .selectAll('allLabels')
+        .selectAll('allPolylines')
         .data(pieData)
-        .join('text')
-        .text(d => d.data.category)
-        .attr('transform', function (d) {
-          const pos = outerArc.centroid(d);
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-          pos[0] = RADIUS * 0.99 * (midangle < Math.PI ? 1 : -1);
-          return `translate(${pos})`;
-        })
-        .style('text-anchor', function (d) {
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-          return (midangle < Math.PI ? 'start' : 'end')
-        })
-        .style('font-size', 18);
+        .join('polyline')
+        .attr("stroke", "black")
+        .style("fill", "none")
+        .attr("stroke-width", 1)
+        .attr('points', (d) => {
+          const posA = arc.centroid(d) // line insertion in the slice
+          const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+          const posC = outerArc.centroid(d); // Label position = almost the same as posB
+          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+
+          posC[0] = RADIUS * THIRD_LINE_LENGTH_SCALE * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+          const lines = [posA, posB, posC];
+          console.log("lines", lines);
+          
+          return lines;
+        });
+        
+        svg
+          .selectAll('allLabels')
+          .data(pieData)
+          // .append('foreignObject')
+          // .join('foreignObject')
+          .join('text')
+          .text(d => d.data.category)
+          .attr('transform', function (d) {
+            const pos = outerArc.centroid(d);
+            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            pos[0] = RADIUS * LABEL_POSITION_SCALE * (midangle < Math.PI ? 1 : -1);
+            return `translate(${pos})`;
+          })
+          .style('text-anchor', function (d) {
+            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            return (midangle < Math.PI ? 'start' : 'end')
+          })
+          .style('font-size', "16px");
     }
   }, [categoriesCounter]);
 
   return (
     <>
+        <CategoriesGraphHeader className="categories-graph-header">Categories Graph</CategoriesGraphHeader>
         {
         Object.keys(categoriesCounter).length ?
           <>
-            <h2>Categories Graph</h2><div id='chartArea'>
-            <svg ref={svgRef} viewBox={`0 0 ${VIEWBOX_X} ${VIEWBOX_Y}`} />
+            <div id='chartArea'>
+              <svg ref={svgRef} viewBox={`0 0 ${VIEWBOX_X} ${VIEWBOX_Y}`} />
             </div>
           </> :
-          ""
+          <Paragraph>No categories found.</Paragraph>
         }
     </>
   );
