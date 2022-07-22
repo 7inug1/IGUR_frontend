@@ -17,11 +17,12 @@ const Image = styled.img`
   margin: 0 auto;
 `;
 const ImageContainer = styled.div`
-  width: 100%;
-  ${'' /* text-align: center; */}
-  background: #000;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  ${'' /* display: block; */}
+  max-width: 100%;
+  height: auto;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  ${'' /* margin: 0 auto; */}
 `;
 const NumberOfLikes = styled.div`
   margin-top: 20px;
@@ -70,8 +71,10 @@ const Modal = ({ setOnModal, location, imgSrc, description, numberOfLikes, numbe
       <ModalContainer className="modal-container">
         <ModalComponent className="modal">
           <Wrapper className="modal-wrapper">
-            {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
-            {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
+            <ImageContainer>
+              {isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} />}
+              {!isClicked && <Image src={imgSrc} alt={description} onClick={onImageClick} />}
+            </ImageContainer>
             <DescriptionContainer>
               {location && <Location>{location}</Location>}
               <Description>{description}</Description>

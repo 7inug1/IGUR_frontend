@@ -9,7 +9,9 @@ const Image = styled.img`
   width: 100%;
   object-fit: contain;
 `;
-const ImageContainer = styled.div``;
+const ImageContainer = styled.div`
+  cursor: pointer;
+`;
 
 function Post({ location, imgSrc, description, numberOfLikes, numberOfReplies, datePosted, prediction }) {
   const [isClicked, setIsClicked] = useState(false);
@@ -23,7 +25,7 @@ function Post({ location, imgSrc, description, numberOfLikes, numberOfReplies, d
   }
   return (
     <List>
-      <ImageContainer>
+      <ImageContainer className='clickable-image-container'>
         <Image src={imgSrc} alt={description} onClick={onPostClick} />
       </ImageContainer>
       {/* { isClicked && <Canvas src={imgSrc} prediction={prediction} setIsClicked={setIsClicked} /> } */}

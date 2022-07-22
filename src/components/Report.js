@@ -11,8 +11,15 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 
 const ReportContainer = styled.div`
+  position: relative;
   border: 2px solid black;
   padding: 30px 5px;
+`;
+const DateCreated = styled.span`
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 14px;
 `;
 const ImageContainer = styled.div`text-align: center`;
 const Image = styled.img``;
@@ -71,6 +78,7 @@ function Report({ setIsLoading, isLoading, response }) {
   return (
     <ReportContainer>
       <h2 className='report-header report-title'>Report</h2>
+      <DateCreated><em>{(new Date(Number(dbUser?.reports[0].id))).toLocaleString("en-us", { dateStyle: "short", timeStyle: "short" })}</em></DateCreated>
       { dbUser ?
         <div>
           <Profile>
