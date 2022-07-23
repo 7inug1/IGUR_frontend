@@ -20,8 +20,6 @@ const Message = styled.p`
 
 function MostCommentedPosts({ posts }) {
   const [sortedPosts, setSortedPosts] = useState(null);
-  console.log("posts", posts);
-  
   const NUMBER_OF_POSTS_TO_SHOW = 6;
   const printSortedContents = () => {
     const array = [];
@@ -31,7 +29,6 @@ function MostCommentedPosts({ posts }) {
       
       for (let i = 0; i < numberOfLoops; i++) {
         const post = sortedPosts[i];
-        console.log("post", post);
         
         array.push(
           <Post
