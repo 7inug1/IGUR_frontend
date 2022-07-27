@@ -50,11 +50,8 @@ const ImageContainer = styled.div`
 `;
 const InfoContainer = styled.div``;
 const Wrapper = styled.div``;
-const ReportContainer = styled.div`
-`;
-// FIXME: This line is used in local environment.
-// const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
-const url = `http://localhost:8080/users`;
+const ReportContainer = styled.div``;
+const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
 
 function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
   const [dbUsers, setDBuser] = useState(null);
