@@ -7,7 +7,6 @@ function SentimentsGraph({ posts }) {
   const [sentiments, setSentiments] = useState(null);
   
   useEffect(() => {
-    console.log("posts", posts);
     const getSentiments = () => {
       let sentiments = [];
 

@@ -110,7 +110,6 @@ function CategoriesGraph({ posts }) {
 
           posC[0] = RADIUS * THIRD_LINE_LENGTH_SCALE * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
           const lines = [posA, posB, posC];
-          console.log("lines", lines);
 
           return lines;
         });
