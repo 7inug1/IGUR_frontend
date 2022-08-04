@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import React, { useState, useMemo } from 'react';
 
 const Form = styled.form`
   background: #fff;
@@ -58,16 +59,17 @@ const Input = styled.input`
 `;
 const Button = styled.button`margin-top: 15px`;
 
-function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
+function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setNotificationCode }) {
   const navigate = useNavigate();
+  const [username, setUsername] = useState();
   const onInputChange = (e) => {
     e.target.id === "username" && setUsername(e.target.value);
     e.target.id === "slider" && setNumberOfCrawls(Number(e.target.value));
-  };
-
+  }
   const onFormSubmit = async (e) => {
     const reportId = Date.now().toString();
     const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}` : `https://igur.link/users/${username}`;
+    
     e.preventDefault();
     setIsLoading(true);
 
@@ -122,9 +124,11 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, u
           <EndingText02>Posts.</EndingText02>
         </Settings>
       </Paragraph>
-      <Button type="submit" className="button01" disabled>Make Report! (Thanks for the support during the Stand-Up presentation (July 23, 2022). We're now closing the searching functionality)</Button>
+      <Button type="submit" className="button01">Make Report! (Thanks for the support during the Stand-Up presentation (July 23, 2022). We're now closing the searching functionality)</Button>
     </Form>
   );
 }
+
+InstagramUserInput = React.memo(InstagramUserInput);
 
 export default InstagramUserInput;

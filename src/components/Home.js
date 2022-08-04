@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import axios from "axios";
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import InstagramUserInput from './InstagramUserInput';
 import { addThousandsSeparator } from "../util/util";
@@ -53,7 +53,7 @@ const Wrapper = styled.div``;
 const ReportContainer = styled.div``;
 const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
 
-function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username, setUsername, setNotificationCode }) {
+function Home({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setUsername, setNotificationCode }) {
   const [dbUsers, setDBuser] = useState(null);
 
   useEffect(() => {
@@ -77,7 +77,7 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
 
   return (
     <>
-      <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />
+      <InstagramUserInput setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} setNotificationCode={setNotificationCode} />
       <Container>
         <H2 className='report-header'>Reports</H2>
         <LeaderboardLists>
@@ -121,4 +121,4 @@ function Leaderboard({ setNumberOfCrawls, numberOfCrawls, setIsLoading, username
   )
 }
 
-export default Leaderboard;
+export default Home;

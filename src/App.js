@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import Reports from './components/Reports';
 import Report from './components/Report';
 import NotificationPage from './components/NotificationPage';
-import Leaderboard from './components/Leaderboard';
+import Home from './components/Home';
 
 const Wrapper = styled.div``;
 const Header = styled.div`
@@ -28,7 +28,7 @@ function App() {
   const navigate = useNavigate();
   const [response, setResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const [username, setUsername] = useState();
+  // const [username, setUsername] = useState();
   const [numberOfCrawls, setNumberOfCrawls] = useState(10);
   const [notificationCode, setNotificationCode] = useState(null);
   const onButtonClick = () => {
@@ -52,9 +52,9 @@ function App() {
       { !isLoading &&
         <Wrapper className='main-wrapper'>
           <Routes>
-            <Route path="/" element={<Leaderboard setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} username={username} setUsername={setUsername} setNotificationCode={setNotificationCode} />} />
+            <Route path="/" element={<Home setNumberOfCrawls={setNumberOfCrawls} numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} setNotificationCode={setNotificationCode} />} />
             <Route path="/users/:username/reports/:reportId" element={<Report response={response} setIsLoading={setIsLoading} isLoading={isLoading} />}></Route>
-            <Route path="/users/:username/reports" element={<Reports response={response} setResponse={setResponse} numberOfCrawls={numberOfCrawls} username={username} setIsLoading={setIsLoading} />}></Route>
+            <Route path="/users/:username/reports" element={<Reports numberOfCrawls={numberOfCrawls} setIsLoading={setIsLoading} />}></Route>
             <Route path="/errors" element={<NotificationPage notificationCode={notificationCode} setNotificationCode={setNotificationCode} />}></Route>
             <Route path="/*" element={<Navigate to="/" replace />} />
           </Routes>

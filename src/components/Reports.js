@@ -33,14 +33,14 @@ const ProceedButton = styled.button`
   margin-top: 50px;
 `;
 const Notification = styled.p``;
-function Reports({ numberOfCrawls, username, setResponse, setIsLoading }) {
+function Reports({ numberOfCrawls, setIsLoading }) {
   const navigate = useNavigate();
   const [dbUser, setDBuser] = useState(null);
   const params = useParams();
+  const username = params.username;
   
   useEffect(() => {
     async function fetchReports() {
-      const username = params.username;
       const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users/${username}/reports` : `https://igur.link/users/${username}/reports`;
 
       try {
