@@ -53,7 +53,7 @@ const Wrapper = styled.div``;
 const ReportContainer = styled.div``;
 const url = process.env.REACT_APP_MODE === "development" ? `http://localhost:8080/users` : `https://igur.link/users`;
 
-function Home({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setUsername, setNotificationCode }) {
+function Home({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setNotificationCode }) {
   const [dbUsers, setDBuser] = useState(null);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ function Home({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setUsername, se
       <Container>
         <H2 className='report-header'>Reports</H2>
         <LeaderboardLists>
-          {dbUsers && (dbUsers.length ? dbUsers.map((user, index) => {
+          {dbUsers && dbUsers.length ? dbUsers.map((user, index) => {
             return [
               <ListItem key={index}>
                 <Link to={`users/${user.username}/reports`} className="link">
@@ -114,7 +114,7 @@ function Home({ setNumberOfCrawls, numberOfCrawls, setIsLoading, setUsername, se
                 </Link>
               </ListItem>
             ]
-          }) : <Notification className='notification'>No instagram reports yet 😭</Notification>)}
+          }) : <Notification className='notification'>No instagram reports yet 😭</Notification>}
         </LeaderboardLists>
       </Container>
     </>
