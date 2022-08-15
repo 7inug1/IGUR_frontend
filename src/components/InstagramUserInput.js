@@ -51,6 +51,7 @@ const InputContainer02 = styled.div`
   position: relative;
   top: 14px;
 `;
+const Label = styled.label``;
 const Input = styled.input`
   border-bottom: 1px solid black !important;
   text-align: center;
@@ -110,6 +111,7 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, s
         <FirstLine>Create an Instagram report with ...</FirstLine>
         <Container>
           <InputContainer01 className="input01">
+            <Label htmlFor="username">Username</Label>
             <Input type="text" placeholder='username' id="username" onChange={onInputChange} required />
           </InputContainer01>
           <EndingText01>'s</EndingText01>
@@ -117,7 +119,7 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, s
         <Settings>
           <SliderContainer>
           <InputContainer02 className="input01">
-            <Input type="text" value={numberOfCrawls} placeholder='instagram username' id="username" onChange={onInputChange} required disabled />
+            <Input type="text" value={numberOfCrawls} id="number-of-posts" onChange={onInputChange} required disabled />
           </InputContainer02>
             <Slider type="range" step="1" min="10" max="20" defaultValue={numberOfCrawls} id="slider" onChange={onInputChange} required />
           </SliderContainer>
@@ -128,7 +130,5 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, s
     </Form>
   );
 }
-
-InstagramUserInput = React.memo(InstagramUserInput);
 
 export default InstagramUserInput;
