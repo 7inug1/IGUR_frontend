@@ -28,7 +28,6 @@ function App() {
   const navigate = useNavigate();
   const [response, setResponse] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  // const [username, setUsername] = useState();
   const [numberOfCrawls, setNumberOfCrawls] = useState(10);
   const [notificationCode, setNotificationCode] = useState(null);
   const onButtonClick = () => {
