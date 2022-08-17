@@ -107,16 +107,9 @@ function Reports({ numberOfCrawls, setIsLoading }) {
                   </Report>
                 ]
               })}
-            </ReportsUL> : <Notification className="notification">No reports yet</Notification>}
-          {(numberOfCrawls && username)
-            ?
-            <>
-              <ProceedButton className='button01' onClick={onButtonClick}>
-                Make me a new report!
-              </ProceedButton>
-            </>
-            :
-          ""}
+            </ReportsUL> 
+          : 
+        <Notification className="notification">No reports yet</Notification>}
       </ReportsContainer> : <div>User doesn't exist</div>}
     </>
   )

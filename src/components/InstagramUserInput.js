@@ -125,7 +125,7 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, s
           <EndingText02>Posts.</EndingText02>
         </Settings>
       </Paragraph>
-      <Button type="submit" className="button01">Make Report! (Thanks for the support during the Stand-Up presentation (July 23, 2022). We're now closing the searching functionality)</Button>
+      <Button type="submit" className="button01" disabled>Make Report! (Thanks for the support during the Stand-Up presentation (July 23, 2022). We're now closing the searching functionality)</Button>
     </Form>
   );
 }
