@@ -111,7 +111,6 @@ function InstagramUserInput({ setNumberOfCrawls, numberOfCrawls, setIsLoading, s
         <FirstLine>Create an Instagram report with ...</FirstLine>
         <Container>
           <InputContainer01 className="input01">
-            <Label htmlFor="username">Username</Label>
             <Input type="text" placeholder='username' id="username" onChange={onInputChange} required />
           </InputContainer01>
           <EndingText01>'s</EndingText01>
