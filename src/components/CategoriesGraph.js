@@ -54,12 +54,16 @@ function CategoriesGraph({ posts }) {
       const SECOND_LINE_LENGTH_SCALE = 0.8;
       const THIRD_LINE_LENGTH_SCALE = 1;
       const LABEL_POSITION_SCALE = 0.7;
+      const getAngle = (d) => {
+        return (180 / Math.PI * (d.startAngle + d.endAngle) / 2 - 90);
+      }
+
       for (const [key, value] of Object.entries(categoriesCounter)) {
         formattedData.push({category: key, count: value});
       }
 
       const pieData = d3.pie().value(d => d.count)(formattedData);
-      const arc = d3.arc().innerRadius(RADIUS * 0.25).outerRadius(RADIUS * 0.6);
+      const arc = d3.arc().innerRadius(RADIUS * 0.25).outerRadius(RADIUS * 0.35);
       const outerArc = d3.arc()
         .innerRadius(RADIUS + 0.2)
         .outerRadius(RADIUS + 0.5);
@@ -96,40 +100,23 @@ function CategoriesGraph({ posts }) {
         });
 
       svg
-        .selectAll('allPolylines')
-        .data(pieData)
-        .join('polyline')
-        .attr("stroke", "black")
-        .style("fill", "none")
-        .attr("stroke-width", 1)
-        .attr('points', (d) => {
-          const posA = arc.centroid(d)
-          const posB = outerArc.centroid(d)
-          const posC = outerArc.centroid(d);
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+      .selectAll('allLabels')
+      .data(pieData)
+      .join('text')
+      .text(d => d.data.category)
+      .attr('transform', function (d) {
+        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
+        const pos = d3.arc().innerRadius(RADIUS * 0.65).outerRadius(RADIUS * 0.1).centroid(d);
+        const angle = midangle < Math.PI ? getAngle(d) : getAngle(d) - 180;
 
-          posC[0] = RADIUS * THIRD_LINE_LENGTH_SCALE * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-          const lines = [posA, posB, posC];
+        return `translate(${pos}) rotate(${angle})`;
+      })
+      .attr("text-anchor", d => {
+        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
 
-          return lines;
-        });
-
-        svg
-          .selectAll('allLabels')
-          .data(pieData)
-          .join('text')
-          .text(d => d.data.category)
-          .attr('transform', function (d) {
-            const pos = outerArc.centroid(d);
-            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-            pos[0] = RADIUS * LABEL_POSITION_SCALE * (midangle < Math.PI ? 1 : -1);
-            return `translate(${pos})`;
-          })
-          .style('text-anchor', function (d) {
-            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-            return (midangle < Math.PI ? 'start' : 'end')
-          })
-          .style('font-size', "16px");
+        return midangle < Math.PI ? `start` : `end`;
+      })
+      .style('font-size', "16px");
     }
   }, [categoriesCounter]);
 
